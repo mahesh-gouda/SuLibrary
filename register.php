@@ -1,0 +1,315 @@
+<?php include_once 'header.php' ?>
+
+<!-- Start: Page Banner -->
+<script src="js/emailScript.js"></script>
+<script
+        src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous"></script>
+<section class="page-banner services-banner">
+    <div class="container">
+        <div class="banner-header">
+            <h2>Signin</h2>
+            <span class="underline center"></span>
+            <p class="lead">Proin ac eros pellentesque dolor pharetra tempo.</p>
+        </div>
+        <div class="breadcrumb">
+            <ul>
+                <li><a href="index.php">Home</a></li>
+                <li>Signin</li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- End: Page Banner -->
+<!-- Start: Cart Section -->
+
+<div class="signup__container" style="background-color: #eeeeee; ">
+
+
+    <section >
+        <div class="container">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-lg-12 col-xl-11">
+                    <div class="card text-black" style="border-radius: 25px;">
+                        <div class="card-body p-md-5">
+                            <div class="row justify-content-center">
+                                <div class="col-md-10 col-lg-8 col-xl-8 order-2 order-lg-1">
+
+                                    <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
+
+                                    <form id="registerFrom" name="registerFrom" method="post" action="" class="mx-1 mx-md-4" enctype="multipart/form-data">
+                                        <div class="card" style="border: none">
+                                            <div class="card-body">
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="firstname" id="firstnameLable">First Name</label>
+                                                        <input type="text" class="form-control" id="firstname" name="firstname"  placeholder="Fist name">
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label for="lastname" id="lastnameLable">Last Name</label>
+                                                        <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last Name">
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="course" id="courselable">Course</label>
+                                                        <select onchange="valChanged()" id="course" name="course" class="form-control">
+                                                            <option selected value="0">--Select Course--</option>
+                                                            <option value="mca">MCA</option>
+                                                            <option value="mba">MBA</option>
+                                                            <option value="bca">BCA</option>
+                                                            <option value="bba">BBA</option>
+
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label for="regNum" id="regNumlable">Register number</label>
+                                                        <input type="text" class="form-control" id="regNum" name="regNum">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="phone" id="phoneLable">Phone</label>
+                                                    <input type="number" class="form-control" id="phone" name="phone" placeholder="">
+                                                </div>
+
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-8">
+
+                                                        <label for="email" id="emailLable">Email</label>
+                                                        <input type="email" class="form-control" id="email" name="email" >
+
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <label for="sendOtp"></label>
+                                                        <input type="button" class="form-control btn btn-info" style="border-radius: 25px;  border: 2px solid" value="send otp" id="sendOtp" name="sendOpt">
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-8">
+
+                                                        <label for="otp" id="verfyotpLable">enter Otp</label>
+                                                        <input type="text" class="form-control" id="otp"  name="otp" placeholder="">
+
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <label for="verify"></label>
+                                                        <input type="button" class="form-control btn  btn-info " style="border-radius: 25px;  border: 2px solid"  value="Verify" id="verify">
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+
+                                                        <label for="password" id="passwordLable">enter Password</label>
+                                                        <input type="text" class="form-control" id="password"  name="password" placeholder="">
+
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label for="vpassword" id="verifypasswordLable">Confirm password</label>
+                                                        <input type="text" class="form-control "  id="vpassword"  name="vpassword">
+                                                    </div>
+                                                </div>
+                                                <br>
+
+                                                <div class="form-group mb-0">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="termsCheck" name="termsCheck">
+                                                        <label class="form-check-label" for="gridCheck" id="termsLable">
+                                                           &nbsp;&nbsp;&nbsp; I Agree for Terms And Conditions
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                            </div>
+
+                                                <button class="btn btn-primary">Submit</button>
+
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                                <div class="col-md-10 col-lg-4 col-xl-4 d-flex align-items-center order-1 order-lg-2">
+
+                                    <img src="images/registerPage.png" class="img-fluid" alt="Sample image">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#registerFrom").submit(function (event) {
+            event.preventDefault();
+            if ($.trim($("#firstname").val()).length > 0) {
+                if ($.trim($("#course").val()) !== "0") {
+                    if ($.trim($("#regNum").val()).length > 0) {
+                        if ($.trim($("#phone").val()).length > 0) {
+
+                            if ($.trim($("#email").val()).length > 0) {
+                                if ($.trim($("#password").val()).length > 0) {
+                                    if ($.trim($("#vpassword").val()).length > 0) {
+
+                                        if($("#termsCheck").prop('checked') == true){
+
+                                            $.ajax({
+                                                url: 'dbHelper/processRegister.php',
+                                                type: 'post',
+                                                data: $("#registerFrom").serialize(),
+                                                success:function (response) {
+                                                    var result = $.trim(response);
+
+                                                   if(result === "success"){
+                                                       window.location.href="signin.php";
+                                                   } else{
+                                                       alert(result);
+                                                   }
+                                                }
+                                            });
+
+                                        } else {
+                                            $("#termsLable").css("color","#fa0606")
+                                        }
+
+                                    } else {
+                                        $("#verifypasswordLable").css("color","#fa0606")
+                                        $("#vpassword").css("border", "3px solid #fa0606");
+                                        $("#vpassword").focus();
+
+                                    }
+
+                                } else {
+                                    $("#passwordLable").css("color","#fa0606")
+                                    $("#password").css("border", "3px solid #fa0606");
+                                    $("#password").focus();
+
+                                }
+
+
+                            } else {
+                                $("#emailLable").css("color","#fa0606")
+                                $("#email").css("border", "3px solid #fa0606");
+                                $("#email").focus();
+
+                            }
+
+                        } else {
+                            $("#phoneLable").css("color","#fa0606")
+                            $("#phone").css("border", "3px solid #fa0606");
+                            $("#phone").focus();
+
+                        }
+
+
+                    } else {
+                        $("#regNumlable").css("color","#fa0606")
+                        $("#regNum").css("border", "3px solid #fa0606");
+                        $("#regNum").focus();
+
+                    }
+
+
+                } else {
+                    $("#courselable").css("color","#fa0606")
+                    $("#course").css("border", "3px solid #fa0606");
+                    $("#course").focus();
+
+                }
+
+
+            } else {
+                $("#firstnameLable").css("color","#fa0606")
+                $("#firstname").css("border-color", "#fa0606");
+                $("#firstname").focus();
+
+            }
+
+
+
+
+        });
+
+        $("#firstname").keyup(function (e) {
+            $("#firstnameLable").css("color","#000000")
+            $("#firstname").css("border-color", "#f4f4f4");
+
+        });
+
+        $("#course").change(function() {
+            alert("hell");
+            $("#courselable").css("color","#000000")
+            $("#course").css("border-color", "#f4f4f4");
+        });
+        $("#regNum").keyup(function (e) {
+            $("#regNumlable").css("color","#000000")
+            $("#regNum").css("border-color", "#f4f4f4");
+
+        });
+        $("#phone").keyup(function (e) {
+            $("#phoneLable").css("color","#000000")
+            $("#phone").css("border-color", "#f4f4f4");
+
+        });
+        $("#email").keyup(function (e) {
+            $("#emailLable").css("color","#000000")
+            $("#email").css("border-color", "#f4f4f4");
+
+        });
+        $("#password").keyup(function (e) {
+            $("#passwordLable").css("color","#000000")
+            $("#password").css("border-color", "#f4f4f4");
+
+        });
+        $("#vpassword").keyup(function (e) {
+            $("#verifypasswordLable").css("color","#000000")
+            $("#vpassword").css("border-color", "#f4f4f4");
+
+        });
+
+
+    });
+
+    function valChanged() {
+        alert("hii");
+
+    }
+
+
+</script>
+
+<!--<script type="text/javascript">-->
+<!---->
+<!--    $(document).ready(function ($) {-->
+<!--        var $form = $('#registerFrom');-->
+<!---->
+<!--        $form.submit(function () {-->
+<!--            alert("hello");-->
+<!--            $.ajax({-->
+<!--                type: 'POST',-->
+<!--                url: "xyz.php",-->
+<!--                data: $form.serialize(),-->
+<!--                // success: function (response) {-->
+<!--                //     alert(response);-->
+<!--                // }-->
+<!--            });-->
+<!---->
+<!---->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+
+
+
+
+
+<!-- End: Cart Section -->
+<?php include_once 'footer.php' ?>
