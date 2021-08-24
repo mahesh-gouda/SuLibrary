@@ -1,6 +1,6 @@
-<footer class="main-footer">
+<footer class="main-footer" style="margin-top: 7%">
     <div class="footer-left">
-        <a href="templateshub.net">Templateshub</a></a>
+        <a href="">Srinivas University</a></a>
     </div>
     <div class="footer-right">
     </div>

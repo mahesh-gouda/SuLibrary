@@ -2,6 +2,10 @@
 include_once 'dbHelper/dbhelper.php';
 session_start();
 ?>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous"></script>
 <style>
     body{
         background: -webkit-linear-gradient(left, #3931af, #00c6ff);
@@ -185,10 +189,12 @@ session_start();
             <div class="row" style="margin-bottom: 0%;" >
                 <div class="col-md-4">
                     <div class="profilepic">
-                        <img class="profilepic__image" src="https://images.unsplash.com/photo-1510227272981-87123e259b17?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=3759e09a5b9fbe53088b23c615b6312e" width="200" height="200" alt="Profibild" />
+                        <img class="profilepic__image selectProfileImg " src="images/profileDefault.jpg" width="200" height="200" alt="Profibild" />
                         <div class="profilepic__content">
-                            <span class="profilepic__icon"><i class="fas fa fa-camera"></i></span>
-                            <span class="profilepic__text">Edit Profile</span>
+                            <span class="profilepic__icon selectProfileImg" ><i class="fas fa fa-camera"></i></span>
+                            <span class="profilepic__text selectProfileImg">Edit Profile</span>
+                            <input id="imageUpload" type="file"
+                                   name="profile_photo" placeholder="Photo" required="" style="display: none">
                         </div>
                     </div>
                 </div>
@@ -220,17 +226,17 @@ session_start();
                         if($isPending==1){
                             $verificationStaus="Verification pending by librarian!!";
                             $color ="blue";
-                            $icon="";
+                            $icon="fa-warning";
                         }else{
                             $verificationStaus="Aproved By Librarian";
                             $color ="green";
-                            $icon="";
+                            $icon="fa-check-circle-o";
                         }
 
 
                         ?>
 
-                        <p class="proile-status"> Status:&nbsp;&nbsp;<i class="fa fa-check-circle-o" style="color: <?php echo $color ?> "><?php echo $verificationStaus ?> </i> </p>
+                        <p class="proile-status"> Status:&nbsp;&nbsp;<i class="fa <?php echo $icon ?>" style="color: <?php echo $color ?> "><?php echo $verificationStaus ?> </i> </p>
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" onclick="summeryClicked()" id="summery-tab" data-toggle="tab" href="#summery" role="tab" aria-controls="summery" aria-selected="true">Summery</a>
@@ -245,7 +251,7 @@ session_start();
                                 <a class="nav-link" onclick="profileClicked()" id="profile-tab" data-toggle="tab" href="#profilePage" role="tab" aria-controls="profilePage" aria-selected="false">Profile</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="logut" data-toggle="tab" href="#profilePage" role="tab" aria-controls="profilePage" aria-selected="false">Profile</a>
+                                <a class="nav-link" id="logut"  href="logout.php"  aria-selected="false">Logout</a>
                             </li>
                         </ul>
                     </div>
@@ -258,10 +264,21 @@ session_start();
                 <div class="col-md-4">
                     <div class="profile-work" >
                         <p id="work-head">Basic Ifo</p>
-                        <p id="info">Course: MCA &nbsp; &nbsp; &nbsp; &nbsp; 3SU19MC811</p>
-                        <P id="info">Computer Science Department</P>
-                        <P id="info">Phone: 9538923365</P>
-                        <P id="info">maheshgouda133@gmail.com</P>
+                        <?php
+                        $userDetails=(new dbhelper)->__getUserRecords();
+                        if($userDetails != 0){
+
+                        foreach ($userDetails as $user){
+
+
+                        ?>
+                        <p id="info">Course: <?php echo $user['course'];  ?>&nbsp; &nbsp; &nbsp; &nbsp; <?php echo $user['regno'];  ?></p>
+<!--                        <P id="info">Computer Science Department</P>-->
+                        <P id="info">Phone: <?php echo $user['phone'];  ?></P>
+                        <P id="info"><?php echo $user['email'];  ?></P>
+                        <?php
+                        }
+                        }?>
                         <p id="work-head">Library Info</p>
                         <p id="info">Issued books&nbsp; &nbsp;  3</p>
                         <P id="info">Reserved books&nbsp; &nbsp;  3</P>
@@ -566,6 +583,25 @@ session_start();
                   $('#summery-tab').click();
         }
 
+        $(document).ready(function () {
+
+
+            $(".selectProfileImg").click(function(){
+                $("#imageUpload").click()
+            });
+
+            function fasterPreview( uploader ) {
+                if ( uploader.files && uploader.files[0] ){
+                    $('#profilepic__image').attr('src',
+                        window.URL.createObjectURL(uploader.files[0]) );
+                }
+            }
+
+            $("#imageUpload").change(function(){
+                fasterPreview( this );
+            });
+
+        });
 
 
 
