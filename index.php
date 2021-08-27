@@ -102,13 +102,13 @@
         <div class="filter-box">
             <h3>What are you looking for at the library?</h3>
             <form id="search-from" action="" method="post" name="search-form " enctype="multipart/form-data">
-                <div class="col-md-4 col-sm-6">
+                <div class="col-md-6 col-sm-6">
                     <div class="form-group">
                         <label class="sr-only" for="keywords">Search by Keyword</label>
                         <input class="form-control" placeholder="Search by Keyword" id="keywords" name="keywords" type="text">
                     </div>
                 </div>
-                <div class="col-md-3 col-sm-6">
+                <div class="col-md-4 col-sm-4">
                     <div class="form-group">
                         <select name="catalog" id="catalog" class="form-control">
                             <option>Search the Catalog</option>
@@ -120,19 +120,8 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="form-group">
-                        <select name="category" id="category" class="form-control">
-                            <option>All Categories</option>
-                            <option>Category 01</option>
-                            <option>Category 02</option>
-                            <option>Category 03</option>
-                            <option>Category 04</option>
-                            <option>Category 05</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-6">
+
+                <div class="col-md-2 col-sm-2">
                     <div class="form-group">
                         <input class="form-control" type="button" name="submit" id="btn"  value="Search">
                     </div>
@@ -944,7 +933,7 @@
         <div class="center-content">
             <h2 class="section-title">Follow Us</h2>
             <span class="underline center"></span>
-            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p class="lead">Srinivas university</p>
         </div>
         <ul>
             <li>

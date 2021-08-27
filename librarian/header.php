@@ -196,8 +196,8 @@
                     <li class="dropdown">
                         <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="copy"></i><span>Books</span></a>
                         <ul class="dropdown-menu">
-                            <li><a class="nav-link" href="alert.html">add books</a></li>
-                            <li><a class="nav-link" href="badge.html">view books</a></li>
+                            <li><a class="nav-link" href="add-books.php">add books</a></li>
+                            <li><a class="nav-link" href="view-book.php">view books</a></li>
                             <li><a class="nav-link" href="breadcrumb.html">manage</a></li>
 
 

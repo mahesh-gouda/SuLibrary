@@ -297,8 +297,8 @@ session_start();
                                             <h4 class="card-title">Issued Books</h4>
                                         </div>
                                         <div class="card-body">
-                                            <h5 class="number mb-0 font-32 counter">31</h5>
-                                            <span class="font-12">Measure How Fast... <a href="#">More</a></span>
+                                            <h5 class="number mb-0 font-32 counter">0</h5>
+<!--                                            <span class="font-12">Measure How Fast... <a href="#">More</a></span>-->
                                         </div>
                                     </div>
                                 </div>
@@ -308,8 +308,8 @@ session_start();
                                             <h3 class="card-title">Reserved Books</h3>
                                         </div>
                                         <div class="card-body">
-                                            <h5 class="number mb-0 font-32 counter">245</h5>
-                                            <span class="font-12">Measure How Fast... <a href="#">More</a></span>
+                                            <h5 class="number mb-0 font-32 counter">0</h5>
+<!--                                            <span class="font-12">Measure How Fast... <a href="#">More</a></span>-->
                                         </div>
                                     </div>
                                 </div>
@@ -319,8 +319,8 @@ session_start();
                                             <h3 class="card-title">E Materials</h3>
                                         </div>
                                         <div class="card-body">
-                                            <h5 class="number mb-0 font-32 counter">17</h5>
-                                            <span class="font-12">Measure How Fast... <a href="#">More</a></span>
+                                            <h5 class="number mb-0 font-32 counter">0</h5>
+<!--                                            <span class="font-12">Measure How Fast... <a href="#">More</a></span>-->
                                         </div>
                                     </div>
                                 </div>
@@ -333,8 +333,8 @@ session_start();
                                             <h3 class="card-title">Fines</h3>
                                         </div>
                                         <div class="card-body">
-                                            <h5 class="number mb-0 font-32 counter">12</h5>
-                                            <span class="font-12">Measure How Fast... <a href="#">More</a></span>
+                                            <h5 class="number mb-0 font-32 counter">0</h5>
+<!--                                            <span class="font-12">Measure How Fast... <a href="#">More</a></span>-->
                                         </div>
                                     </div>
                                 </div>
@@ -344,8 +344,8 @@ session_start();
                                             <h3 class="card-title">Total Cards</h3>
                                         </div>
                                         <div class="card-body">
-                                            <h5 class="number mb-0 font-32 counter">12</h5>
-                                            <span class="font-12">Measure How Fast... <a href="#">More</a></span>
+                                            <h5 class="number mb-0 font-32 counter">0</h5>
+<!--                                            <span class="font-12">Measure How Fast... <a href="#">More</a></span>-->
                                         </div>
                                     </div>
                                 </div>
@@ -355,8 +355,8 @@ session_start();
                                             <h3 class="card-title">Available Cards</h3>
                                         </div>
                                         <div class="card-body">
-                                            <h5 class="number mb-0 font-32 counter">19</h5>
-                                            <span class="font-12">Measure How Fast... <a href="#">More</a></span>
+                                            <h5 class="number mb-0 font-32 counter">0</h5>
+<!--                                            <span class="font-12">Measure How Fast... <a href="#">More</a></span>-->
                                         </div>
                                     </div>
                                 </div>

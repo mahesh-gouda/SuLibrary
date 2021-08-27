@@ -6,23 +6,23 @@
             <div class="row">
                 <div class="col-md-4 col-sm-6 widget-container">
                     <div id="text-2" class="widget widget_text">
-                        <h3 class="footer-widget-title">About Libraria</h3>
+                        <h3 class="footer-widget-title">About SULibrary</h3>
                         <span class="underline left"></span>
                         <div class="textwidget">
-                            It is a long established fact that a reader will be distracted by the readable content of a page when looking.
+                          Su library is designed to help students to easly get access to the books and material of the library through online
                         </div>
                         <address>
                             <div class="info">
                                 <i class="fa fa-location-arrow"></i>
-                                <span>21 King Street, Melbourne, Victoria 3000 Australia</span>
+                                <span>pandeshwara, mangalore,575001</span>
                             </div>
                             <div class="info">
                                 <i class="fa fa-envelope"></i>
-                                <span><a href="mailto:support@libraria.com">support@libraria.com</a></span>
+                                <span><a href="mailto:support@libraria.com">SrinivasUniversity@gmail.com</a></span>
                             </div>
                             <div class="info">
                                 <i class="fa fa-phone"></i>
-                                <span><a href="tel:012-345-6789">+ 012-345-6789</a></span>
+                                <span><a href="tel:012-345-6789">+9876543210</a></span>
                             </div>
                         </address>
                     </div>
@@ -34,11 +34,12 @@
                         <div class="menu-quick-links-container">
                             <ul id="menu-quick-links" class="menu">
                                 <li><a href="#">Library News</a></li>
-                                <li><a href="#">History</a></li>
-                                <li><a href="#">Meet Our Staff</a></li>
-                                <li><a href="#">Board of Trustees</a></li>
-                                <li><a href="#">Budget</a></li>
-                                <li><a href="#">Annual Report</a></li>
+                                <li><a href="#">Books</a></li>
+                                <li><a href="#">Orders</a></li>
+                                <li><a href="#">News</a></li>
+                                <li><a href="#">Research</a></li>
+                                <li><a href="#">publication</a></li>
+
                             </ul>
                         </div>
                     </div>
@@ -62,15 +63,15 @@
                 </div>
                 <div class="col-md-4 col-sm-6 widget-container">
                     <div class="widget twitter-widget">
-                        <h3 class="footer-widget-title">Latest Tweets</h3>
+                        <h3 class="footer-widget-title">Latest News</h3>
                         <span class="underline left"></span>
-                        <div id="twitter-feed">
+                        <div id="news">
                             <ul>
                                 <li>
-                                    <p><a href="#">@TemplateLibraria</a> Sed ut perspiciatis unde omnis iste natus error sit voluptatem. <a href="#">template-libraria.com</a></p>
+                                     <p> students form srinivas univerty have organised a virtual cultural even.... </p>
                                 </li>
                                 <li>
-                                    <p><a href="#">@TemplateLibraria</a> Sed ut perspiciatis unde omnis iste natus error sit voluptatem. <a href="#">template-libraria.com</a></p>
+                                    <p><i class="far fa-newspaper"></i> students form srinivas univerty have organised a virtual cultural even.... </p>
                                 </li>
                             </ul>
                         </div>
@@ -83,17 +84,15 @@
         <div class="container">
             <div class="row">
                 <div class="footer-text col-md-3">
-                    <p><a target="_blank" href="https://www.templateshub.net">Templates Hub</a></p>
+                    <p><a target="_blank" href="https://www.templateshub.net">Srinivas University</a></p>
                 </div>
                 <div class="col-md-9 pull-right">
                     <ul>
                         <li><a href="index-2.html">Home</a></li>
                         <li><a href="books-media-list-view.html">Books &amp; Media</a></li>
-                        <li><a href="news-events-list-view.html">News &amp; Events</a></li>
-                        <li><a href="#">Kids &amp; Teens</a></li>
-                        <li><a href="services.html">Services</a></li>
+                        <li><a href="news-events-list-view.html">News </a></li>
                         <li><a href="#">Research</a></li>
-                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="blog.html">Publication</a></li>
                         <li><a href="contact.php">Contact</a></li>
                     </ul>
                 </div>
