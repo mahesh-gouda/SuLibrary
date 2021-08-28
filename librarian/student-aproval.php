@@ -193,11 +193,25 @@
             success: function (response) {
                 $('#aprove').modal('hide');
                 if (response === "1") {
-                    $("#messegeBlock").css("display", "block");
-                    // location.reload();
+                    setTimeout(function() {
+                        swal({
+                            title: "Success!",
+                            text: "Cards Added successfully",
+                            type: "success"
+                        }, function() {
+                            location.reload();
+                        });
+                    }, 100);
                 } else {
-                    $("#message").html("Invalid Credential Provided");
-                    $("#messegeBlock").css("display", "block");
+                    setTimeout(function() {
+                        swal({
+                            title: "Failed",
+                            text: "Failed to Add cards",
+                            type: "warning"
+                        }, function() {
+                            location.reload();
+                        });
+                    }, 100);
                 }
             }
         });

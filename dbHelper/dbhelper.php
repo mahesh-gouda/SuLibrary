@@ -289,12 +289,12 @@ class dbhelper extends connect
         }
     }
 
-    public function __storeOrder($orderid,$userid,$date,$returnDate,$cardnumber)
+    public function __storeOrder($orderid,$userid,$date,$returnDate,$accessionNumber,$cardnumber,$bookid)
     {
         try {
-            $sql = "INSERT INTO sulibrary.orders(order_id,`accession_number`, `user_id`, `order_date`, `return_date`) VALUES (?,?,?,?,?);";
+            $sql = "INSERT INTO sulibrary.orders(order_id, card_number,accession_number, user_id, order_date, return_date,book_id) VALUES (?,?,?,?,?,?,?);";
             $stmt=$this->__connect()->prepare($sql);
-            $stmt->execute([$orderid,$cardnumber,$userid,$date,$returnDate]);
+            $stmt->execute([$orderid,$cardnumber,$accessionNumber,$userid,$date,$returnDate,$bookid]);
             return 1;
         } catch (ErrorException $e) {
             die($e);
@@ -333,6 +333,164 @@ class dbhelper extends connect
 
         }
 
+    }
+
+    public function __updateUserCard($userid,$cardnumber,$status)
+    {
+        try{
+            $sql="UPDATE  sulibrary.cards SET `status` =? where card_number =? and user_id =?;";
+            $stmt=$this->__connect()->prepare($sql);
+            $stmt->execute([$status,$cardnumber,$userid]);
+
+
+        }catch (ErrorException $e){
+            die($e);
+
+        }
+    }
+
+    public function __updateAccession($book_id,$accession,$status)
+    {
+        try{
+            $sql="UPDATE  sulibrary.accession_details SET `status` =? where accession_number =? and book_id =?;";
+            $stmt=$this->__connect()->prepare($sql);
+            $stmt->execute([$status,$accession,$book_id]);
+        }catch (ErrorException $e){
+            die($e);
+
+        }
+    }
+
+    public function __getBookId($accession)
+    {
+        try {
+        $sql =  "SELECT * FROM  sulibrary.accession_details where accession_number  ='$accession';";
+        $stmt = $this->__connect()->query($sql);
+        if($stmt->rowCount()){
+            $rows = $stmt->fetchAll();
+            foreach ($rows as $row){
+                return $row['book_id'];
+            }
+        }else return 0;
+    } catch (ErrorException $e) {
+        die($e);
+
+    }
+    }
+
+    public function __checkBookOder($bookId, $userId)
+    {
+        try {
+            $sql =  "SELECT * FROM  sulibrary.orders inner join sulibrary.accession_details on orders.accession_number = accession_details.accession_number where orders.user_id ='$userId' and orders.status =0 or orders.status=1 and accession_details.book_id='$bookId';";
+            $stmt = $this->__connect()->query($sql);
+            if($stmt->rowCount()){
+                return 1;
+            }else return 0;
+        } catch (ErrorException $e) {
+            die($e);
+
+        }
+    }
+
+    public function __getUserOrderDetails($userId)
+    {
+        try {
+            $sql =  "SELECT * FROM sulibrary.orders INNER JOIN sulibrary.accession_details on orders.accession_number = accession_details.accession_number INNER JOIN sulibrary.books on accession_details.book_id = books.book_id and orders.user_id ='$userId';";
+            $stmt = $this->__connect()->query($sql);
+            if($stmt->rowCount()){
+                $rows = $stmt->fetchAll();
+                return $rows;
+            }else return 0;
+        } catch (ErrorException $e) {
+            die($e);
+
+        }
+
+    }
+
+    public function __checkOrderStatus($accession, $userId)
+    {
+        try {
+            $sql =  "SELECT * FROM  sulibrary.orders  where user_id ='$userId' and accession_number='$accession';";
+            $stmt = $this->__connect()->query($sql);
+            if($stmt->rowCount()){
+                $rows=$stmt->fetchAll();
+              foreach ($rows as $row){
+                  return $row['status'];
+              }
+            }else return 0;
+        } catch (ErrorException $e) {
+            die($e);
+
+        }
+    }
+
+    public function __getPendingOrders()
+    {
+        try {
+            $sql =  "SELECT * FROM  sulibrary.orders inner join sulibrary.users on orders.user_id=users.user_id inner join sulibrary.books on books.book_id=orders.book_id where status=0;";
+            $stmt = $this->__connect()->query($sql);
+            if($stmt->rowCount()){
+                $rows=$stmt->fetchAll();
+                return $rows;
+            }else return 0;
+        } catch (ErrorException $e) {
+            die($e);
+
+        }
+    }
+
+    public function __getPendingOrderInfo($id)
+    {
+        try {
+            $sql =  "SELECT * FROM  sulibrary.orders inner join sulibrary.users on orders.user_id=users.user_id inner join sulibrary.books on books.book_id=orders.book_id where orders.id='$id';";
+            $stmt = $this->__connect()->query($sql);
+            if($stmt->rowCount()){
+                $rows=$stmt->fetchAll();
+
+                $firstname = array_map(function($a) { return $a["first_name"]; }, $rows);
+                $bookname = array_map(function($a) { return $a["title"]; }, $rows);
+                $accession = array_map(function($a) { return $a["accession_number"]; }, $rows);
+                $regno = array_map(function($a) { return $a["regno"]; }, $rows);
+                echo json_encode(array(
+                    array('firstname' => $firstname, 'bookname'=> $bookname,'accession'=>$accession,'regno'=>$regno)
+
+                ));
+
+            }else return 0;
+        } catch (ErrorException $e) {
+            die($e);
+
+        }
+    }
+
+    public function __saveOrderConfirmation($orderid, $comment)
+    {
+        try{
+            $sql="UPDATE sulibrary.orders SET status = 1 , comment= ? where id =?;";
+            $stmt=$this->__connect()->prepare($sql);
+            $stmt->execute([$comment,$orderid]);
+            return 1;
+        }catch (ErrorException $e){
+            die($e);
+            return 0;
+
+        }
+
+    }
+
+    public function __rejectOrder($rejectId,$comment)
+    {
+        try{
+            $sql="UPDATE sulibrary.orders SET status = -1 , comment= ? where id =?;";
+            $stmt=$this->__connect()->prepare($sql);
+            $stmt->execute([$comment,$rejectId]);
+            return 1;
+        }catch (ErrorException $e){
+            die($e);
+            return 0;
+
+        }
     }
 
 

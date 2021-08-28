@@ -83,7 +83,7 @@
                             <figcaption class="info-wrap wow fadeInUp animated" data-wow-delay=".5s"
                                         style="margin-left: 4px; margin-top: 4px">
                                 <h4 class="title"><?php echo $title ?></h4>
-                                <p class="desc"><?php echo $description ?></p>
+                                <p class="desc"><?php echo  strip_tags(substr($description,0,60)),'...'; ?></p>
                                 <div class="rating-wrap">
                                     <div class="label-rating"><?php echo $edition ?> Edition</div>
                                     <div class="label-rating">Author: <?php echo $author ?></div>

@@ -9,83 +9,20 @@
 
     <!-- Carousel slides -->
     <div class="carousel-inner" >
+
         <div class="item active">
             <figure>
                 <img alt="Home Slide" src="images/header-slider/home-v1/header-slide.jpg" />
             </figure>
             <div class="container">
-                <div class="carousel-caption" style="margin-top: 50px" >
-                    <h3>Online Learning Anytime, Anywhere!</h3>
-                    <h2>Discover Your Roots</h2>
-                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humor, or randomized words.</p>
-
-<!--                        <div class="row" style="margin-top: 50px">-->
-<!--                               <form action="#" method="post">-->
-<!--                                    <div class="row">-->
-<!--                                    <div class="col-lg-6">-->
-<!--                                        <label class="sr-only" for="keywords">Search by Keyword</label>-->
-<!--                                        <input class="form-control" placeholder="Search by Keyword" id="keywords" name="keywords" type="text">-->
-<!--                                    </div>-->
-<!--                                    <div class="col-lg-2">-->
-<!--                                        <select name="catalog" id="catalog" class="form-control" style="float: top">-->
-<!--                                            <option>Search the Catalog</option>-->
-<!--                                            <option style="float: top">Catalog 01</option>-->
-<!--                                            <option style="float: top">Catalog 02</option>-->
-<!--                                            <option style="float: top">Catalog 03</option>-->
-<!--                                            <option style="float: top">Catalog 04</option>-->
-<!--                                            <option style="float: top">Catalog 05</option>-->
-<!--                                        </select>-->
-<!--                                    </div>-->
-<!--                                    <div class="col-lg-2">-->
-<!--                                        <select name="category" id="category" class="form-control " style="z-index: 10000; position: relative; " >-->
-<!--                                            <option style="z-index: 2; position: absolute; ">All Categories</option>-->
-<!--                                            <option style="z-index: 2; position: absolute; ">Category 01</option>-->
-<!--                                            <option style="z-index: 2; position: absolute; ">Category 02</option>-->
-<!--                                            <option style="z-index: 2; position: absolute; ">Category 03</option>-->
-<!--                                            <option >Category 04</option>-->
-<!--                                            <option >Category 05</option>-->
-<!--                                        </select>-->
-<!--                                    </div>-->
-<!---->
-<!--                                    <div class="col-lg-2">-->
-<!--                                        <input class="form-control" type="submit" name="submit" value="Search">-->
-<!--                                    </div>-->
-<!---->
-<!--                                    </div>-->
-<!--                                </form>-->
-<!--                        </div>-->
-                    </div>
-              </div>
-        </div>
-        <div class="item">
-            <figure>
-                <img alt="Home Slide" src="images/header-slider/home-v1/header-slide.jpg" />
-            </figure>
-            <div class="container">
                 <div class="carousel-caption">
                     <h3>Online Learning Anytime, Anywhere!</h3>
                     <h2>Discover Your Roots</h2>
-                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humor, or randomized words.</p>
+                    <p>The Full Packed Srinivas University Library. You can Browse through thousands of our library books, order form comfort of your place</p>
+                </div>
+            </div>
+        </div>
 
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <figure>
-                <img alt="Home Slide" src="images/header-slider/home-v1/header-slide.jpg" />
-            </figure>
-            <div class="container">
-                <div class="carousel-caption">
-                    <h3>Online Learning Anytime, Anywhere!</h3>
-                    <h2>Discover Your Roots</h2>
-                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humor, or randomized words.</p>
-                    <div class="slide-buttons hidden-sm hidden-xs">
-                        <a href="#" class="btn btn-primary">Read More</a>
-                        <a href="#" class="btn btn-default">Purchase</a>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Controls -->
@@ -268,7 +205,7 @@
         <ul class="category-list">
             <li class="category-item ">
                 <figure>
-                    <img src="images/Research/researchgate.png" />
+                    <img src="images/Research/researchgate.png" style="width:500px;height:260px;" />
                     <figcaption class="bg-orange">
                         <div class="info-block">
                             <h4>Research Gate</h4>
@@ -288,7 +225,7 @@
             </li>
             <li class="category-item ">
                 <figure>
-                    <img src="images/Research/google%20scholor.png" />
+                    <img src="images/Research/google%20scholor.png"  style="width:500px;height:260px;"/>
                     <figcaption class="bg-orange">
                         <div class="info-block">
                             <h4>Google Scholar</h4>
@@ -308,7 +245,7 @@
             </li>
             <li class="category-item ">
                 <figure>
-                    <img src="images/Research/academia-edu-750.jpg" />
+                    <img src="images/Research/academia-edu-750.jpg" style="width:500px;height:260px;" />
                     <figcaption class="bg-orange">
                         <div class="info-block">
                             <h4>Academia.edu</h4>

@@ -21,6 +21,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 </head>
 
 <body>
@@ -175,7 +177,7 @@
 
                     </li>
                     <li>
-                        <a class="nav-link" href="#"><i data-feather="file"></i><span>Order</span></a>
+                        <a class="nav-link" href="manage-orders.php"><i data-feather="file"></i><span>Order</span></a>
                     </li>
                     <li>
                         <a class="nav-link" href="#"><i data-feather="file"></i><span>returns</span></a>

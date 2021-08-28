@@ -40,6 +40,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
     <![endif]-->
 </head>
 
@@ -160,8 +163,7 @@
                                     <ul class="dropdown-menu">
                                         <li><a href="cart.php">Cart</a></li>
                                         <li><a href="checkout.php">Checkout</a></li>
-                                        <li><a href="signin.php">Signin/Register</a></li>
-                                        <li><a href="404.php">404/Error</a></li>
+                                        <li><a href="orders.php">Oders</a></li>
                                     </ul>
                                 </li>
 
