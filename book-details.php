@@ -4,7 +4,8 @@ if(!isset($_SESSION['user_id'])){
 }
 
 ?>
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 <style>
     .heading-text{
         font-size: 30px;
@@ -136,7 +137,7 @@ if(!isset($_SESSION['user_id'])){
 
                                   <a href="" id="btnPlaceHold" class="btn btn-dark-gray" style="width: 200px">Place a Hold</a> <br>
                                   
-                                  <a href="" id="btnAddToCart" class="btn btn-dark-gray" style="margin-top: 2%">Add to Book Bag</a>
+                                  <a  id="btnAddToCart" onclick="addToCart(<?php echo $bookId?>)" class="btn btn-dark-gray" style="margin-top: 2%">Add to Book Bag</a>
                                     <?php   }
 
 
@@ -192,12 +193,11 @@ if(!isset($_SESSION['user_id'])){
                                                     <p><strong>Author:</strong>'.$author.'</p>
                                                     <p><strong>stock:</strong> '.$stock.'</p>
                                                 </header>
-                                                <p>'.$description.'</p>
-                                                <div class="actions">
+                                                          <div class="actions">
                                                     <ul>
                                                         <li>
-                                                            <a href="book-details.php?id='.$bookId.'" target="_blank" data-toggle="blog-tags"
-                                                               data-placement="top" title="view book" class="btn btn-sm btn-primary " >
+                                                            <a href="book-details.php?id='.$bookId.'"
+                                                               data-placement="top" title="view book" style="color: #0d6aad" >
                                                                View Book
                                                             </a>
                                                             
@@ -226,37 +226,88 @@ if(!isset($_SESSION['user_id'])){
     </div>
 </div>
 
-
+<style>
+    #overlay{background-image: url('images/Circle-Loading.svg');background-color: rgba(255,255,255,0.5);background-position: center center;background-repeat: no-repeat; filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#50FFFFFF,endColorstr=#50FFFFFF);width: 100%; height: 100%; position: fixed; top: 0; left: 0; z-index: 9999;}
+</style>
+<div id="overlay"  ></div>
 <script>
-
+    window.onload = () => {
+        $('#overlay').hide();
+    }
     $("#btnPlaceHold").click(function (event) {
         event.preventDefault();
         const acn = $("#accession").html();
         const bookid = $("#bookid").html();
-        $.ajax({
-            url: 'dbHelper/processOrder.php',
-            type: 'post',
-            data:{'acn':acn,'bookid':bookid},
-            success:function (response) {
-               var result = $.trim(response);
-                if(result === "0"){
-                    $("#divErr").css("display", "block");
-                    $("#errMsg").html("Please Login to make an order");
-                } else if(result === "1"){
-                    $("#divErr").css("display", "block");
-                    $("#errMsg").html("Your Verification is pending");
-                 } else if(result === "2"){
-                    $("#divErr").css("display", "block");
-                    $("#errMsg").html("opps!! You Have no cards Left to Order");
-                }else if(result === "4"){
-                    window.location.href="order-success.php";
-                }else {
-                    $("#divErr").css("display", "block");
-                    $("#errMsg").html("opps!! some error occured");
+        $('#overlay').show();
+        setTimeout(function () {
+            $.ajax({
+                url: 'dbHelper/processOrder.php',
+                type: 'post',
+                data: {'acn': acn, 'bookid': bookid},
+                success: function (response) {
+                    var result = $.trim(response);
+                    if (result === "0") {
+                        $("#divErr").css("display", "block");
+                        $("#errMsg").html("Please Login to make an order");
+                    } else if (result === "1") {
+                        $("#divErr").css("display", "block");
+                        $("#errMsg").html("Your Verification is pending");
+                    } else if (result === "2") {
+                        $("#divErr").css("display", "block");
+                        $("#errMsg").html("opps!! You Have no cards Left to Order");
+                    } else if (result === "4") {
+                        window.location.href = "order-success.php";
+                    } else {
+                        $("#divErr").css("display", "block");
+                        $("#errMsg").html("opps!! some error occured");
+                    }
                 }
-            }
-        });
+            });
+        },3000);
 
     });
+
+    function addToCart(id){
+        $.ajax({
+                url: 'dbHelper/addToCart.php',
+                type: 'POST',
+                data: {"bid": id},
+                success: function (response) {
+                    if (response === "1") {
+                        setTimeout(function() {
+                            swal({
+                                title: "Success",
+                                text: "Book Added to Cart",
+                                type: "success"
+                            }, function() {
+                                location.reload();
+                            });
+                        }, 100);
+                    } else  if (response === "2")  {
+                        setTimeout(function() {
+                            swal({
+                                title: "Already Exists!",
+                                text: "book Already exists in you Cart",
+                                type: "warning"
+                            }, function() {
+
+                            });
+                        }, 100);
+                    }else {
+                        setTimeout(function() {
+                            swal({
+                                title: "Failed!",
+                                text: "Book Not Added to Cart",
+                                type: "warning"
+                            }, function() {
+
+                            });
+                        }, 100);
+                    }
+
+                }
+            });
+
+    }
 </script>
 <?php include_once 'footer.php' ?>

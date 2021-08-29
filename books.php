@@ -1,5 +1,8 @@
 <?php include_once 'header.php'?>
-
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
     <!-- Start: Page Banner -->
     <section class="page-banner services-banner">
         <div class="container">
@@ -21,11 +24,11 @@
     <div class="container">
         <div class="row" style="margin-top: 10%;  width: 100%;">
             <!-- Start: Search Section -->
-            <section class="search-filters" style="width: 100%">
+            <section class="search-filters">
                 <div class="container">
                     <div class="filter-box">
                         <h3>What are you looking for at the library?</h3>
-                        <form action="http://libraria.demo.presstigers.com/index.html" method="get">
+                        <form id="search-from" action="" method="post" name="search-form " enctype="multipart/form-data">
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group">
                                     <label class="sr-only" for="keywords">Search by Keyword</label>
@@ -35,28 +38,40 @@
                             <div class="col-md-4 col-sm-4">
                                 <div class="form-group">
                                     <select name="catalog" id="catalog" class="form-control">
-                                        <option>Search the Catalog</option>
-                                        <option>Catalog 01</option>
-                                        <option>Catalog 02</option>
-                                        <option>Catalog 03</option>
-                                        <option>Catalog 04</option>
-                                        <option>Catalog 05</option>
+                                        <option value="0">Search the Department</option>
+                                        <option value="1">Computer Science</option>
+                                        <option value="2">Business</option>
+                                        <option value="3">physiotherapy</option>
+                                        <option value="4">Animation</option>
+                                        <option value="5">Hotel Management</option>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="col-md-2 col-sm-2">
-                                <div class="form-group">
-                                    <input class="form-control" type="submit" value="Search">
+                                <div class="form-group" style="width: 100%; height: 100%">
+                                    <input  style="width: 100%; height: 100%" class="btn btn-primary" type="submit" name="submit" id="btn"  value="Search">
                                 </div>
                             </div>
-
                         </form>
                     </div>
                 </div>
             </section>
             <!-- End: Search Section -->
         </div>
+        <script>
+            $("#search-from").on('submit',function (e) {
+                e.preventDefault();
+                alert("hello");
+                var keywords = $('#keywords').val();
+                var deparmentVal = $('#catalog').val();
+                var department="";
+                if(deparmentVal !== 0){
+                    department = $('#catalog').children(':selected').text();;
+                }
+                window.location.href = "books-list-view.php?keyword="+keywords+"&department="+department;
+            });
+        </script>
 
         <div class="row" >
             <?php
@@ -106,13 +121,26 @@
                                 </div>
 
                             </div>
-                            <?php } else{?>
+                            <?php } else{
+
+                             $rowsavd = (new dbhelper)->__getDateToReserve($bookId);
+                            $availableDate="";
+                            if($rowsavd != 0) {
+                                foreach ($rowsavd as $rowavd) {
+                                    $availableDate = $rowavd['return_date'];
+                                }
+                            }
+
+                                ?>
+
+
                             <div class="bottom-wrap wow fadeInUp animated" data-wow-delay=".5s"
                                  style="margin-left: 4px; ">
-                                <a href="book-details.php?id=<?php echo $bookId ?>" class="btn btn-sm btn-warning float-right"
+                                <a href="reserve-book.php?id=<?php echo $bookId ?>" class="btn btn-sm btn-warning float-right"
                                    style="margin-bottom: 10px; margin-right: 6px; color: whitesmoke ">Reserve Now</a>
                                 <div class="price-wrap h5">
-                                <span class="price-new" style="color: red">No copies left <?php echo $stock ?></span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span class="price-new" style="color: red">Currently not Available</span>
+                                    <span>Back on : <?php echo $availableDate ?> </span>
                                 </div>
                             <?php }?>
                         </figure>

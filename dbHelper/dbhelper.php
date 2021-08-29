@@ -272,10 +272,9 @@ class dbhelper extends connect
         }
     }
 
-    public function __getUserCardCount()
+    public function __getUserCardCount($userId)
     {
         try {
-            $userId = $_SESSION['user_id'];
             $sql = "SELECT card_number FROM sulibrary.cards WHERE user_id='$userId' and status = 0 LIMIT 1;";
             $stmt = $this->__connect()->query($sql);
             if($stmt->rowCount()){
@@ -381,7 +380,7 @@ class dbhelper extends connect
     public function __checkBookOder($bookId, $userId)
     {
         try {
-            $sql =  "SELECT * FROM  sulibrary.orders inner join sulibrary.accession_details on orders.accession_number = accession_details.accession_number where orders.user_id ='$userId' and orders.status =0 or orders.status=1 and accession_details.book_id='$bookId';";
+            $sql =  "SELECT * FROM  sulibrary.orders where user_id = '$userId' and book_id='$bookId' and ( status =0 or status = 1 or status = 2 or status = 4 );";
             $stmt = $this->__connect()->query($sql);
             if($stmt->rowCount()){
                 return 1;
@@ -490,6 +489,357 @@ class dbhelper extends connect
             die($e);
             return 0;
 
+        }
+    }
+
+    public function __generateReturnRequest($accession, $orderId)
+    {
+        try{
+            $date=date('Y-m-d');
+            $sql="UPDATE sulibrary.orders SET status = 2 , returned_date= ? where order_id =? and accession_number=?;";
+            $stmt=$this->__connect()->prepare($sql);
+            $stmt->execute([$date,$orderId,$accession]);
+            return 1;
+        }catch (ErrorException $e){
+            die($e);
+            return 0;
+
+        }
+    }
+
+    public function __getReturnRequests()
+    {
+        try {
+            $sql =  "SELECT * FROM  sulibrary.orders inner join sulibrary.users on orders.user_id=users.user_id inner join sulibrary.books on books.book_id=orders.book_id where status=2;";
+            $stmt = $this->__connect()->query($sql);
+            if($stmt->rowCount()){
+                $rows=$stmt->fetchAll();
+                return $rows;
+            }else return 0;
+        } catch (ErrorException $e) {
+            die($e);
+
+        }
+    }
+
+    public function __confirmReturn($oid)
+    {
+        try{
+            $sql="UPDATE sulibrary.orders SET status = 3 where id =?;;";
+            $stmt=$this->__connect()->prepare($sql);
+            $stmt->execute([$oid]);
+            return 1;
+        }catch (ErrorException $e){
+            die($e);
+            return 0;
+
+        }
+    }
+
+    public function __rejectRetun($oid)
+    {
+        try{
+            $sql="UPDATE sulibrary.orders SET status = 4 where id =?;;";
+            $stmt=$this->__connect()->prepare($sql);
+            $stmt->execute([$oid]);
+            return 1;
+        }catch (ErrorException $e){
+            die($e);
+            return 0;
+
+        }
+    }
+
+    public function __getStudentDetails()
+    {
+        try{
+            $sql = "SELECT * FROM sulibrary.users where role='student'";
+            $stmt = $this->__connect()->query($sql);
+            if($stmt->rowCount() > 0){
+                return $stmt->fetchAll();
+            }else
+                return 0;
+        }catch (ErrorException $e){
+            die($e);
+        }
+    }
+
+    public function __getStudentCardDetails($uid)
+    {
+        try{
+            $sql = "SELECT * FROM sulibrary.users  inner join sulibrary.cards on users.user_id=  cards.user_id where users.user_id='$uid'";
+            $stmt = $this->__connect()->query($sql);
+            if($stmt->rowCount() > 0){
+                return $stmt->fetchAll();
+            }else
+                return 0;
+        }catch (ErrorException $e){
+            die($e);
+        }
+    }
+
+    public function __getStudentInfo($id)
+    {
+        try{
+            $sql = "SELECT * FROM sulibrary.users where users.user_id='$id'";
+            $stmt = $this->__connect()->query($sql);
+            if($stmt->rowCount() > 0){
+                $rows= $stmt->fetchAll();
+
+                $userId = array_map(function($a) { return $a["user_id"]; }, $rows);
+                $firstname = array_map(function($a) { return $a["first_name"]; }, $rows);
+                $lastname = array_map(function($a) { return $a["last_name"]; }, $rows);
+                $course = array_map(function($a) { return $a["course"]; }, $rows);
+                $regno = array_map(function($a) { return $a["regno"]; }, $rows);
+                echo json_encode(array(
+                    array('userid' => $userId,'firstname' => $firstname, 'lastname'=> $lastname,'course'=>$course,'regno'=>$regno)
+
+                ));
+
+
+
+
+            }else
+                return 0;
+        }catch (ErrorException $e){
+            die($e);
+        }
+    }
+
+    public function __deleteCardDetail($uid, $cardnumber)
+    {
+        try{
+            $sql = "DELETE FROM sulibrary.cards where card_number='$cardnumber' and user_id='$uid'";
+            $stmt = $this->__connect()->query($sql);
+           return 1;
+        }catch (ErrorException $e){
+            die($e);
+        }
+    }
+
+    public function __issuedBookDeatails($userid)
+    {
+        try {
+            $sql =  "SELECT * FROM  sulibrary.orders inner join sulibrary.users on orders.user_id=users.user_id inner join sulibrary.books on books.book_id=orders.book_id where status=1 and users.user_id='$userid';";
+            $stmt = $this->__connect()->query($sql);
+            if($stmt->rowCount()){
+                $rows=$stmt->fetchAll();
+                return $rows;
+            }else return 0;
+        } catch (ErrorException $e) {
+            die($e);
+
+        }
+
+    }
+
+    public function __issuedBooksCount($userid)
+    {
+        try {
+            $sql =  "SELECT * FROM  sulibrary.orders inner join sulibrary.users on orders.user_id=users.user_id inner join sulibrary.books on books.book_id=orders.book_id where status=1 and users.user_id='$userid';";
+            $stmt = $this->__connect()->query($sql);
+            return $stmt->rowCount();
+
+        } catch (ErrorException $e) {
+            die($e);
+
+        }
+    }
+
+    public function __reservedBoksCount($userid)
+    {
+        try {
+            $sql =  "SELECT * FROM  sulibrary.orders inner join sulibrary.users on orders.user_id=users.user_id inner join sulibrary.books on books.book_id=orders.book_id where status=5 and users.user_id='$userid';";
+            $stmt = $this->__connect()->query($sql);
+            return $stmt->rowCount();
+
+        } catch (ErrorException $e) {
+            die($e);
+
+        }
+    }
+
+    public function __getTotaFines($userId)
+    {
+        try {
+            $sql =  "SELECT sum(fine) as 'total_fine' FROM  sulibrary.orders where user_id='$userId';";
+            $stmt = $this->__connect()->query($sql);
+            $rows= $stmt->rowCount();
+            $rows=$stmt->fetchAll();
+            foreach( $rows as $row){
+                return $row['total_fine'];
+            }
+        } catch (ErrorException $e) {
+            die($e);
+
+        }
+
+    }
+
+    public function __getTotalCards($userId)
+    {
+        try {
+            $sql =  "SELECT count(*) as 'total_cards'  FROM  sulibrary.cards where user_id='$userId';";
+            $stmt = $this->__connect()->query($sql);
+            $rows= $stmt->rowCount();
+            $rows=$stmt->fetchAll();
+            foreach( $rows as $row){
+                return $row['total_cards'];
+            }
+        } catch (ErrorException $e) {
+            die($e);
+
+        }
+    }
+
+    public function __availableCards($userId)
+    {
+        try {
+            $sql =  "SELECT count(*) as 'total_cards'  FROM  sulibrary.cards where user_id='$userId' and status = 0;";
+            $stmt = $this->__connect()->query($sql);
+            $rows= $stmt->rowCount();
+            $rows=$stmt->fetchAll();
+            foreach( $rows as $row){
+                return $row['total_cards'];
+            }
+        } catch (ErrorException $e) {
+            die($e);
+
+        }
+
+    }
+
+    public function __getBooksInCart($userId)
+    {
+        try {
+            $sql =  "SELECT *  FROM  sulibrary.cart inner join sulibrary.books on cart.book_id = books.book_id where user_id='$userId';";
+            $stmt = $this->__connect()->query($sql);
+           if($stmt->rowCount()){
+               return $stmt->fetchAll();
+           }else return 0;
+
+        } catch (ErrorException $e) {
+            die($e);
+
+        }
+    }
+
+    public function __addToCart($bid,$userid)
+    {
+        try {
+            $sql = "INSERT INTO sulibrary.cart(user_id,book_id) VALUES (?,?);";
+            $stmt=$this->__connect()->prepare($sql);
+            $stmt->execute([$userid,$bid]);
+            return 1;
+        } catch (ErrorException $e) {
+            die($e);
+
+        }
+    }
+
+    public function __checkWhetherAlreadyExistsInCart($bid, $userid)
+    {
+        try {
+            $sql =  "SELECT *  FROM  sulibrary.cart where user_id='$userid' and book_id = '$bid';";
+            $stmt = $this->__connect()->query($sql);
+            return $stmt->rowCount();
+
+
+        } catch (ErrorException $e) {
+            die($e);
+
+        }
+    }
+
+    public function __removeFromCart($bid, $userid)
+    {
+        try{
+            $sql = "DELETE FROM sulibrary.cart where book_id='$bid' and user_id='$userid'";
+            $stmt = $this->__connect()->query($sql);
+            return 1;
+        }catch (ErrorException $e){
+            die($e);
+        }
+    }
+
+    public function __totalBooks()
+    {
+        try {
+            $sql =  "SELECT * FROM  sulibrary.books ;";
+            $stmt = $this->__connect()->query($sql);
+            return $stmt->rowCount();
+
+        } catch (ErrorException $e) {
+            die($e);
+
+        }
+
+    }
+
+    public function __getDateToReserve($bookId)
+    {
+
+        $sql = "SELECT * from sulibrary.orders WHERE book_id ='$bookId' and status IN (0,1,2,4) and accession_number NOT IN(SELECT accession_number FROM sulibrary.reserved WHERE book_id='$bookId') order by return_date ASC LIMIT 1;";
+        $stmt = $this->__connect()->query($sql);
+        if($stmt->rowCount()) {
+            $rows = $stmt->fetchAll();
+            return $rows;
+        }else return 0;
+    }
+
+    public function __checkReservation($bookId, $userId)
+    {
+        $sql = "SELECT * FROM sulibrary.reserved WHERE book_id='$bookId' and user_id='$userId';";
+        $stmt = $this->__connect()->query($sql);
+        return $stmt->rowCount();
+    }
+
+    public function __reserveBook($userid, $bookid, $accession, $date, $issueDate)
+    {
+        try {
+            $sql = "INSERT INTO sulibrary.reserved (user_id, book_id, accession_number, reservation_date, issue_date) VALUES  (?,?,?,?,?);";
+            $stmt=$this->__connect()->prepare($sql);
+            $stmt->execute([$userid,$bookid,$accession,$date,$issueDate]);
+            return 1;
+        } catch (ErrorException $e) {
+            die($e);
+
+        }
+    }
+
+    public function __getUsserReservations($userId)
+    {
+        $sql = "SELECT * FROM sulibrary.reserved inner join sulibrary.books on reserved.book_id= books.book_id where user_id='$userId';";
+        $stmt = $this->__connect()->query($sql);
+        if($stmt->rowCount()) {
+            $rows = $stmt->fetchAll();
+            return $rows;
+        }else return 0;
+    }
+
+    public function __cancelReservation($reservationId)
+    {
+        try{
+            $sql = "DELETE FROM sulibrary.reserved where reservation_id='$reservationId'";
+            $stmt = $this->__connect()->query($sql);
+            return 1;
+        }catch (ErrorException $e){
+            die($e);
+        }
+    }
+
+    public function __getSearchResults($keywords, $keywords1)
+    {
+       // $sql = "SELECT * FROM sulibrary.books where title like '%$keywords%' or author like  '%$keywords%' or edition like  '%$keywords%' or description like '%$keywords%' or book_department like  '%$keywords1%' or book_department like  '%$keywords%';";
+        try {
+            $sql = "SELECT * FROM sulibrary.books where title like '%$keywords%' or author like  '%$keywords%' or edition like  '%$keywords%' or description like '%$keywords%' or book_department like  '%$keywords1%' or book_department like  '%$keywords%'";
+            $stmt = $this->__connect()->query($sql);
+            if ($stmt->rowCount() > 0) {
+                $rows = $stmt->fetchAll();
+                return $rows;
+            }else return 0;
+        } catch (ErrorException $e) {
+            die($e);
         }
     }
 

@@ -1,4 +1,6 @@
-<?php session_start(); ?>
+<?php
+ob_start();
+session_start(); ?>
 <?php  include_once 'dbHelper\dbhelper.php'; ?>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -162,7 +164,7 @@
                                     <a data-toggle="dropdown" class="dropdown-toggle disabled" href="#">Pages</a>
                                     <ul class="dropdown-menu">
                                         <li><a href="cart.php">Cart</a></li>
-                                        <li><a href="checkout.php">Checkout</a></li>
+                                        <li><a href="reserved-books.php">Reserved</a></li>
                                         <li><a href="orders.php">Oders</a></li>
                                     </ul>
                                 </li>
@@ -200,9 +202,9 @@
                                 <a href="#">Pages</a>
                                 <ul>
                                     <li><a href="cart.php">Cart</a></li>
-                                    <li><a href="checkout.php">Checkout</a></li>
-                                    <li><a href="signin.php">Signin/Register</a></li>
-                                    <li><a href="404.php">404/Error</a></li>
+                                    <li><a href="reserved-books.php">reserved</a></li>
+                                    <li><a href="signin.php">Orders</a></li>
+
                                 </ul>
                             </li>
 

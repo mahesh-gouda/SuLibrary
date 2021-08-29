@@ -1,11 +1,13 @@
 <?php include_once 'header.php';
 include_once 'dbHelper/dbhelper.php';
-session_start();
+
 ?>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
         crossorigin="anonymous"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 <style>
     body{
         background: -webkit-linear-gradient(left, #3931af, #00c6ff);
@@ -184,9 +186,9 @@ session_start();
 <div class="page">
 
 
-    <div class=" emp-profile">
+    <div class=" emp-profile" style="margin-bottom: 3%; margin-top: 3%">
         <form method="post">
-            <div class="row" style="margin-bottom: 0%;" >
+            <div class="row"  >
                 <div class="col-md-4">
                     <div class="profilepic">
                         <img class="profilepic__image selectProfileImg " src="images/profileDefault.jpg" width="200" height="200" alt="Profibild" />
@@ -202,6 +204,7 @@ session_start();
                     <div class="profile-head">
 
                         <?php
+                        $userId = $_SESSION['user_id'];
                         $userDetails=(new dbhelper)->__getUserRecords();
                         if($userDetails != 0){
 
@@ -248,8 +251,12 @@ session_start();
                                 <a class="nav-link" onclick="reservedBooksClicked()" id="reserved-books-tab" data-toggle="tab" href="#reservedBooks" role="tab" aria-controls="reservedBooks" aria-selected="false">Reserved books</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" onclick="eMaterials()" id="eMaterials-tab" data-toggle="tab" href="#eMaterials" role="tab" aria-controls="eMaterials" aria-selected="false">E materials</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" onclick="profileClicked()" id="profile-tab" data-toggle="tab" href="#profilePage" role="tab" aria-controls="profilePage" aria-selected="false">Profile</a>
                             </li>
+
                             <li class="nav-item">
                                 <a class="nav-link" id="logut"  href="logout.php"  aria-selected="false">Logout</a>
                             </li>
@@ -279,11 +286,11 @@ session_start();
                         <?php
                         }
                         }?>
-                        <p id="work-head">Library Info</p>
-                        <p id="info">Issued books&nbsp; &nbsp;  3</p>
-                        <P id="info">Reserved books&nbsp; &nbsp;  3</P>
-                        <P id="info">Nearest Due date: </P>
-                        <P id="info">Fines: 0rs</P>
+<!--                        <p id="work-head">Library Info</p>-->
+<!--                        <p id="info">Issued books&nbsp; &nbsp;  3</p>-->
+<!--                        <P id="info">Reserved books&nbsp; &nbsp;  3</P>-->
+<!--                        <P id="info">Nearest Due date: </P>-->
+<!--                        <P id="info">Fines: 0rs</P>-->
                     </div>
                 </div>
                 <div class="col-md-8">
@@ -297,7 +304,10 @@ session_start();
                                             <h4 class="card-title">Issued Books</h4>
                                         </div>
                                         <div class="card-body">
-                                            <h5 class="number mb-0 font-32 counter">0</h5>
+                                            <?php
+                                            $issuedBookCount=(new dbhelper)->__issuedBooksCount($userId);
+                                            ?>
+                                            <h5 class="number mb-0 font-32 counter"><?php echo $issuedBookCount?></h5>
 <!--                                            <span class="font-12">Measure How Fast... <a href="#">More</a></span>-->
                                         </div>
                                     </div>
@@ -308,7 +318,10 @@ session_start();
                                             <h3 class="card-title">Reserved Books</h3>
                                         </div>
                                         <div class="card-body">
-                                            <h5 class="number mb-0 font-32 counter">0</h5>
+                                            <?php
+                                            $reservedbookCount=(new dbhelper)->__reservedBoksCount($userId);
+                                            ?>
+                                            <h5 class="number mb-0 font-32 counter"><?php echo $reservedbookCount?></h5>
 <!--                                            <span class="font-12">Measure How Fast... <a href="#">More</a></span>-->
                                         </div>
                                     </div>
@@ -333,7 +346,10 @@ session_start();
                                             <h3 class="card-title">Fines</h3>
                                         </div>
                                         <div class="card-body">
-                                            <h5 class="number mb-0 font-32 counter">0</h5>
+                                            <?php
+                                            $totalFine=(new dbhelper)->__getTotaFines($userId);
+                                            ?>
+                                            <h5 class="number mb-0 font-32 counter"><?php echo $totalFine?></h5>
 <!--                                            <span class="font-12">Measure How Fast... <a href="#">More</a></span>-->
                                         </div>
                                     </div>
@@ -344,7 +360,10 @@ session_start();
                                             <h3 class="card-title">Total Cards</h3>
                                         </div>
                                         <div class="card-body">
-                                            <h5 class="number mb-0 font-32 counter">0</h5>
+                                            <?php
+                                            $totalCards=(new dbhelper)->__getTotalCards($userId);
+                                            ?>
+                                            <h5 class="number mb-0 font-32 counter"><?php echo $totalCards?></h5>
 <!--                                            <span class="font-12">Measure How Fast... <a href="#">More</a></span>-->
                                         </div>
                                     </div>
@@ -355,14 +374,17 @@ session_start();
                                             <h3 class="card-title">Available Cards</h3>
                                         </div>
                                         <div class="card-body">
-                                            <h5 class="number mb-0 font-32 counter">0</h5>
+                                            <?php
+                                            $availableCards=(new dbhelper)->__availableCards($userId);
+                                            ?>
+                                            <h5 class="number mb-0 font-32 counter"><?php echo $availableCards?></h5>
 <!--                                            <span class="font-12">Measure How Fast... <a href="#">More</a></span>-->
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <h3 class="heading-text tab1" style="margin-top: 3%">Recently Serached</h3>
-                            <h3 class="heading-text tab1" style="margin-top: 3%">History</h3>
+<!--                            <h3 class="heading-text tab1" style="margin-top: 3%">Recently Serached</h3>-->
+<!--                            <h3 class="heading-text tab1" style="margin-top: 3%">History</h3>-->
 
                         </div>
                         <div class="tab-pane fade tab tab2" id="issuedBooks" role="tabpanel" aria-labelledby="issued-books-tab">
@@ -381,35 +403,46 @@ session_start();
                                         </tr>
                                         </thead>
                                         <tbody>
+                                        <?php
+                                        $issuedBookDetails=(new dbhelper)->__issuedBookDeatails($userId);
+                                        if($issuedBookDetails != 0){
+                                            $i=0;
+                                        foreach ($issuedBookDetails as $row){
+
+                                        ?>
+
                                         <tr class="cart_item">
                                             <td >
-                                                <lable>1</lable>
+                                                <lable><?php echo $i++;?></lable>
                                             </td>
                                             <td data-title="Product" class="product-name">
                                                 <span class="product-thumbnail">
-                                                    <a href="#"><img src="images/cart/cart-product-1.jpg" alt="cart-product-1"></a>
+                                                    <a href="#"><img src="books/<?php echo $row['cover_photo'];?>" alt="cart-product-1" width="45" height="45"></a>
                                                 </span>
                                                 <br>
                                                 <span >
-                                                 <a href="#"><strong>The Great Gatsby</strong></a>
+                                                 <a href="#"><strong><?php echo $row['title'];?></strong></a>
                                                 </span>
                                             </td>
                                             <td >
-
+                                                <?php echo $row['card_number'];?>
                                             </td>
                                             <td >
-
+                                                <?php echo $row['order_date'];?>
                                             </td>
                                             <td >
-
+                                                <?php echo $row['return_date'];?>
                                             </td>
                                             <td>
-
+                                                <?php echo $row['fine'];?>
                                             </td>
                                             <td>
-                                                <input type="button" value="Return">
+                                                <input type="button" onclick="requestReturn( <?php echo $row['order_id'];?> , <?php echo $row['accession_number'];?>)" class="btn btn-primary" value="Return">
                                             </td>
                                         </tr>
+                                    <?php   }
+                                        } ?>
+
 
                                         </tbody>
                                     </table>
@@ -425,6 +458,85 @@ session_start();
                                         <tr>
                                             <th class="product-name">Sl</th>
                                             <th class="product-name">Book</th>
+                                            <th class="product-name">Author</th>
+                                            <th class="product-name">Accession no</th>
+                                            <th class="product-quantity">Reserved Date</th>
+                                            <th class="product-price">Issue date </th>
+                                            <th class="product-subtotal">Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php
+
+                                        $rows =  (new dbhelper)->__getUsserReservations($userId);
+                                        if ($rows != 0) {
+                                            $i = 1;
+                                            foreach ($rows as $row) {
+                                                $bookId = $row['book_id'];
+                                                $edition = $row['edition'];
+                                                $author = $row['author'];
+                                                $title = $row['title'];
+                                                $department = $row['book_department'];
+                                                $description = $row['description'];
+                                                $accession=$row['accession_number'];
+                                                $bookType = $row['book_type'];
+                                                $coverImg = $row['cover_photo'];
+                                                $reservationId=$row['reservation_id'];
+                                                $reservationDate = $row['reservation_date'];
+                                                $issueDate =$row['issue_date'];
+
+
+                                                ?>
+
+                                                ?>
+
+                                                <tr class="cart_item">
+                                                    <td >
+                                                        <lable><?php echo $i++;?></lable>
+                                                    </td>
+                                                    <td data-title="Product" class="product-name">
+                                                <span class="product-thumbnail">
+                                                    <a href="#"><img src="books/<?php echo $coverImg;?>" alt="cart-product-1" width="45" height="45"></a>
+                                                </span>
+                                                        <br>
+                                                        <span >
+                                                 <a href="#"><strong><?php echo $title;?></strong></a>
+                                                </span>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $author;?>
+                                                    </td>
+                                                    <td >
+                                                        <?php echo $accession;?>
+                                                    </td>
+                                                    <td >
+                                                        <?php echo $reservationDate?>
+                                                    </td>
+                                                    <td >
+                                                        <?php echo $issueDate?>
+                                                    </td>
+
+                                                    <td>
+                                                        <input type="button" onclick="cancelReservation( <?php echo $reservationId?> )" class="btn btn-primary" value="cancel">
+                                                    </td>
+                                                </tr>
+                                            <?php   }
+                                        } ?>
+
+
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade tab tab5" id="eMaterials" role="tabpanel" aria-labelledby="eMaterials-books-tab">
+                            <div  class="tab-pane fade in active tab5">
+                                <form method="post" >
+                                    <table class="table table-bordered shop_table cart">
+                                        <thead>
+                                        <tr>
+                                            <th class="product-name">Sl</th>
+                                            <th class="product-name">Book</th>
                                             <th class="product-name">Card no</th>
                                             <th class="product-quantity">Available Date</th>
                                             <th class="product-price">Return date </th>
@@ -433,36 +545,46 @@ session_start();
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr class="cart_item">
-                                            <td >
-                                                <lable>1s</lable>
-                                            </td>
-                                            <td data-title="Product" class="product-name">
+                                        <?php
+                                        $issuedBookDetails=(new dbhelper)->__issuedBookDeatails($userId);
+                                        if($issuedBookDetails != 0){
+                                            $i=0;
+                                            foreach ($issuedBookDetails as $row){
+
+                                                ?>
+
+                                                <tr class="cart_item">
+                                                    <td >
+                                                        <lable><?php echo $i++;?></lable>
+                                                    </td>
+                                                    <td data-title="Product" class="product-name">
                                                 <span class="product-thumbnail">
-                                                    <a href="#"><img src="images/cart/cart-product-1.jpg" alt="cart-product-1"></a>
+                                                    <a href="#"><img src="books/<?php echo $row['cover_photo'];?>" alt="cart-product-1" width="45" height="45"></a>
                                                 </span>
-                                                <br>
-                                                <span >
-                                                 <a href="#"><strong>The Great Gatsby</strong></a>
+                                                        <br>
+                                                        <span >
+                                                 <a href="#"><strong><?php echo $row['title'];?></strong></a>
                                                 </span>
-                                            </td>
-                                            <td >
+                                                    </td>
+                                                    <td >
+                                                        <?php echo $row['card_number'];?>
+                                                    </td>
+                                                    <td >
+                                                        <?php echo $row['order_date'];?>
+                                                    </td>
+                                                    <td >
+                                                        <?php echo $row['return_date'];?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $row['fine'];?>
+                                                    </td>
+                                                    <td>
+                                                        <input type="button" onclick="requestReturn( <?php echo $row['order_id'];?> , <?php echo $row['accession_number'];?>)" class="btn btn-primary" value="Return">
+                                                    </td>
+                                                </tr>
+                                            <?php   }
+                                        } ?>
 
-                                            </td>
-                                            <td >
-
-                                            </td>
-                                            <td >
-
-                                            </td>
-                                            <td>
-
-                                            </td>
-                                            <td>
-                                                <input type="button" value="Cancel">
-
-                                            </td>
-                                        </tr>
 
                                         </tbody>
                                     </table>
@@ -577,6 +699,54 @@ session_start();
             </div>
         </form>
     </div>
+
+
+
+
+<script>
+
+    function requestReturn(orderId,accession){
+        // alert(orderId +' ,'+ accession)
+        swal({
+            title: "confirmation",
+            text: "Do you want to Request Return for this ?",
+            type: "info",
+            showCancelButton: true
+
+        }, function() {
+            $.ajax({
+                url: 'dbHelper/processReturn.php',
+                type: 'post',
+                data:{'accession':accession,'orderId':orderId} ,
+                success:function (response) {
+                    var result = $.trim(response);
+
+                    if(result === "0"){
+                        swal({
+                            title: "Failed",
+                            text: "Return Request Faled",
+                            type: "warning",
+
+                        });
+                    } else if(result === "1"){
+                        swal({
+                            title: "Return Requested",
+                            text: "Return Request Successfully placed",
+                            type: "success",
+
+                        }, function() {
+                            location.reload();
+                        });
+                    }
+                }
+            });
+
+        });
+
+
+    }
+</script>
+
     <script>
 
         window.onload = () => {
@@ -604,12 +774,51 @@ session_start();
         });
 
 
+        function cancelReservation(reservationId){
+            swal({
+                title: "confirmation",
+                text: "Do you want to Cancel this Reservation ?",
+                type: "info",
+                showCancelButton: true
+
+            }, function() {
+                $.ajax({
+                    url: 'dbHelper/cancelReservation.php',
+                    type: 'post',
+                    data:{'reservationId':reservationId} ,
+                    success:function (response) {
+                        var result = $.trim(response);
+                        if(result === "1"){
+                            swal({
+                                title: "Reservation canceled",
+                                text: "Reservation canceled Successfully",
+                                type: "success",
+
+                            }, function() {
+                            window.location.reload();
+                            });
+                        }else{
+                            swal({
+                                title: "Failed",
+                                text: "Cancel Request Faled",
+                                type: "warning",
+
+                            });
+                        }
+                    }
+                });
+
+            });
+
+
+        }
 
 
         function summeryClicked() {
             $('.tab2').css({'display':'none'});
             $('.tab3').css({'display':'none'});
             $('.tab4').css({'display':'none'});
+            $('.tab5').css({'display':'none'});
             $('.tab1').css({'display':'block'});
 
         }
@@ -618,6 +827,7 @@ session_start();
              $('.tab1').css({'display':'none'});
              $('.tab3').css({'display':'none'});
              $('.tab4').css({'display':'none'});
+             $('.tab5').css({'display':'none'});
              $('.tab2').css({'display':'block'});
         }
 
@@ -625,13 +835,23 @@ session_start();
             $('.tab1').css({'display':'none'});
             $('.tab2').css({'display':'none'});
             $('.tab4').css({'display':'none'});
+            $('.tab5').css({'display':'none'});
             $('.tab3').css({'display':'block'});
         }
         function profileClicked() {
             $('.tab1').css({'display':'none'});
             $('.tab2').css({'display':'none'});
             $('.tab3').css({'display':'none'});
+            $('.tab5').css({'display':'none'});
             $('.tab4').css({'display':'block'});
         }
+        function eMaterials(){
+            $('.tab1').css({'display':'none'});
+            $('.tab2').css({'display':'none'});
+            $('.tab3').css({'display':'none'});
+            $('.tab4').css({'display':'none'});
+            $('.tab5').css({'display':'block'});
+        }
     </script>
+
 <?php include_once 'footer.php' ?>

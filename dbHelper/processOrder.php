@@ -8,7 +8,7 @@ if(isset($_SESSION['user_id'])){
     if($isPending==1) {
      echo 1;
     }else{
-        $cardnumber = (new dbhelper)->__getUserCardCount();
+        $cardnumber = (new dbhelper)->__getUserCardCount($userid);
         if($cardnumber==0){
             echo 2;
         }else{

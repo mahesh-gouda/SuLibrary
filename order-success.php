@@ -121,7 +121,10 @@
 
         </div>
     </div>
+    <button class="btn btn-primary float-right" onclick="print()">Print</button>
 </section>
+
+
 </div>
 
 <?php include_once 'footer.php' ?>

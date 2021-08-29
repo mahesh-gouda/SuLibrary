@@ -37,13 +37,13 @@ if(!isset($_SESSION['user_id'])){
 <section class="page-banner services-banner">
     <div class="container">
         <div class="banner-header">
-            <h2>Books & Media Listing</h2>
+            <h2>Reserved books</h2>
             <span class="underline center"></span>
-            <p class="lead">Proin ac eros pellentesque dolor pharetra tempo.</p>
+            <p class="lead">You can see all your reserves listed here.</p>
         </div>
         <div class="breadcrumb">
             <ul>
-                <li><a href="index-2.html">Home</a></li>
+                <li><a href="index.php">Home</a></li>
                 <li>Books & Media</li>
             </ul>
         </div>
@@ -60,7 +60,7 @@ if(!isset($_SESSION['user_id'])){
                     <div class="row" style="margin-top: 4%; margin-bottom: 3%">
 
                         <div class="container">
-                            <h1 class="heading-text2"> Your Orders <i class="fa fa-shopping-cart"></i>...</h1>
+                            <h1 class="heading-text2"> Your Reservation <i class="fa fa-shopping-cart"></i>...</h1>
                         </div>
 
                         <!-- End: Search Section -->
@@ -78,10 +78,10 @@ if(!isset($_SESSION['user_id'])){
                             return abs(round($diff / 86400));
                         }
 
-                       if(isset($_SESSION['user_id'])){
-                                                $userId= $_SESSION['user_id'];
-                       }
-                        $rows =  (new dbhelper)->__getUserOrderDetails($userId);
+                        if(isset($_SESSION['user_id'])){
+                            $userId= $_SESSION['user_id'];
+                        }
+                        $rows =  (new dbhelper)->__getUsserReservations($userId);
                         if ($rows != 0) {
                             $i = 1;
                             foreach ($rows as $row) {
@@ -94,14 +94,11 @@ if(!isset($_SESSION['user_id'])){
                                 $accession=$row['accession_number'];
                                 $bookType = $row['book_type'];
                                 $coverImg = $row['cover_photo'];
-                                $orderId=$row['order_id'];
-                                $oderDate = $row['order_date'];
-                                $returnDate =$row['return_date'];
-                                $comment=$row['comment'];
+                                $reservationId=$row['reservation_id'];
+                                $reservationDate = $row['reservation_date'];
+                                $issueDate =$row['issue_date'];
                                 $date=date('Y-m-d');
-                                $hasOdered = (new dbhelper)->__checkOrderStatus($accession, $userId);
-
-                                $daysLeft = dateDiff($date,$returnDate);
+                                $daysLeft = dateDiff($date,$issueDate);
 
                                 ?>
 
@@ -118,19 +115,13 @@ if(!isset($_SESSION['user_id'])){
                                             <p><strong>Author :</strong><?php echo $author?></p><br>
                                             <p><strong>Edition :</strong> <?php echo $edition?> edition</p><br>
                                             <p><strong>Department :</strong><?php echo $department?></p><br>
-                                            <p><strong>Description :</strong><?php echo strip_tags(substr($description,0,30)),'...';?></p><br>
-                                            <p><strong>Remarks by lecturer  :</strong><?php echo $comment?></p>
+                                            <p><strong>Description :</strong><?php echo strip_tags(substr($description,0,30)),'...';?></p><br>>
                                             <div class="float-right">
-                                             <?php
-                                             if($hasOdered==1 || $hasOdered==4){
-                                                 ?>
 
-                                                 <a  onclick="requestReturn(<?php echo $orderId?>,<?php echo $accession?>)" id="retunBtn" class="btn btn-dark-gray" style="width: 200px; border-radius: 9px">Request Return</a>
 
-                                                     <?php
-                                             }
+                                                    <a  onclick="cancelReservation(<?php echo $reservationId?>)" id="cancelBtn" class="btn btn-dark-gray" style="width: 200px; border-radius: 9px">Cancel Reservation</a>
 
-                                             ?>
+
 
                                             </div>
 
@@ -139,33 +130,13 @@ if(!isset($_SESSION['user_id'])){
                                     </div>
                                     <div class="col-xs-12 col-sm-12 col-md-3 ">
                                         <div class="post-right-content" >
-                                            <h3 class="heading-text3">Oder details</h3><br>
-                                            <?php if (isset($_SESSION['user_id'])) {
-                                                $userId = $_SESSION['user_id'];
+                                            <h3 class="heading-text3">Reservation details</h3><br>
 
-                                                $status="";
-                                                if ($hasOdered == 1) {
-                                                    $status="Approved";
-                                                } elseif ($hasOdered == 0) {
-                                                    $status="Pending";
-
-                                                } elseif($hasOdered== -1) {
-                                                    $status="Rejected";
-
-                                                } elseif($hasOdered== 2) {
-                                                    $status="Return Requested";
-                                                }elseif($hasOdered== 3) {
-                                                    $status="Returned";
-                                                }elseif($hasOdered== 4) {
-                                                    $status="Return Rejected";
-                                                }
-                                            } ?>
-                                            <h3 style="color: #e30b23"><strong style="color: #0f57ec"> Status :</strong> <?php echo $status?></h3><br>
-                                            <p><strong style="f"> Order Id:</strong> <?php echo $orderId?></p><br>
+                                            <h3 style="color: #e30b23"><strong style="color: #0f57ec"> Get the Book On :</strong> <?php echo $issueDate?></h3><br>
+                                            <p><strong style="f"> Reservation Id:</strong> <?php echo $reservationDate?></p><br>
                                             <p><strong>Accession:</strong> <?php echo $accession?></p><br>
                                             <p><strong>Book Id:</strong> <?php echo $bookId?></p><br>
-                                            <p><strong>Oder Date:</strong> <?php echo $oderDate?></p><br>
-                                            <p><strong>Return Date:</strong> <?php echo $returnDate?></p><br>
+                                            <p><strong>Reserved Date:</strong> <?php echo $reservationDate?></p><br>
                                             <p><strong>Days Left:</strong> <?php echo $daysLeft?></p>
                                         </div>
 
@@ -197,42 +168,42 @@ if(!isset($_SESSION['user_id'])){
 
 <script>
 
-    function requestReturn(orderId,accession){
-           swal({
-                title: "confirmation",
-                text: "Do you want to Request Return for this ?",
-                type: "info",
-               showCancelButton: true
+    function cancelReservation(reservationId){
+        swal({
+            title: "confirmation",
+            text: "Do you want to Cancel this Reservation ?",
+            type: "info",
+            showCancelButton: true
 
-            }, function() {
-                $.ajax({
-                    url: 'dbHelper/processReturn.php',
-                    type: 'post',
-                    data:{'accession':accession,'orderId':orderId} ,
-                    success:function (response) {
-                        var result = $.trim(response);
+        }, function() {
+            $.ajax({
+                url: 'dbHelper/cancelReservation.php',
+                type: 'post',
+                data:{'reservationId':reservationId} ,
+                success:function (response) {
+                    var result = $.trim(response);
 
-                        if(result === "0"){
-                            swal({
-                                title: "Failed",
-                                text: "Return Request Faled",
-                                type: "warning",
+                    if(result === "1"){
+                        swal({
+                            title: "Reservation canceled",
+                            text: "Reservation canceled Successfully",
+                            type: "success",
 
-                            });
-                        } else if(result === "1"){
-                            swal({
-                                title: "Return Requested",
-                                text: "Return Request Successfully placed",
-                                type: "success",
+                        }, function() {
+                            location.reload();
+                        });
+                    }else{
+                        swal({
+                            title: "Failed",
+                            text: "Cancel Request Faled",
+                            type: "warning",
 
-                            }, function() {
-                                location.reload();
-                            });
-                        }
+                        });
                     }
-                });
-
+                }
             });
+
+        });
 
 
     }

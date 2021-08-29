@@ -46,7 +46,20 @@ if (isset($_POST['title'])) {
     for ($i = 0; $i < $count - 2; $i++) {
         (new dbhelper)->__saveAccessionNumbers($book_id,$myArray[$i]);
     }
+    echo 1;
 
 
-} else echo "not set";
+}elseif(isset($_POST['Ebook_id'])){
+    $jsonText = $_REQUEST['accession'];
+    $book_id=$_POST['Ebook_id'];
+    $decodedText = html_entity_decode($jsonText);
+    $myArray = json_decode($decodedText, true);
+    $count = count($myArray);
+    for ($i = 0; $i < $count-2; $i++) {
+        (new dbhelper)->__saveAccessionNumbers($book_id,$myArray[$i]);
+
+    }
+    echo 1;
+
+}
 

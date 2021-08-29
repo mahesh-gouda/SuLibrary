@@ -48,19 +48,19 @@
                 <div class="col-md-4 col-sm-4">
                     <div class="form-group">
                         <select name="catalog" id="catalog" class="form-control">
-                            <option>Search the Catalog</option>
-                            <option>Catalog 01</option>
-                            <option>Catalog 02</option>
-                            <option>Catalog 03</option>
-                            <option>Catalog 04</option>
-                            <option>Catalog 05</option>
+                            <option value="0">Search the Department</option>
+                            <option value="1">Computer Science</option>
+                            <option value="2">Business</option>
+                            <option value="3">physiotherapy</option>
+                            <option value="4">Animation</option>
+                            <option value="5">Hotel Management</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="col-md-2 col-sm-2">
-                    <div class="form-group">
-                        <input class="form-control" type="button" name="submit" id="btn"  value="Search">
+                    <div class="form-group" style="width: 100%; height: 100%">
+                        <input  style="width: 100%; height: 100%" class="btn btn-primary" type="submit" name="submit" id="btn"  value="Search">
                     </div>
                 </div>
             </form>
@@ -98,26 +98,24 @@
 
 
 
-    // $("#search-from").on('submit',function (e) {
-    //     e.preventDefault();
-    //     $.ajax({
-    //         url: 'submit.php',
-    //         type: 'post'
-    //         data: $("#search-from").serialize(),
-    //         success:function (response) {
-    //             alert(response);
-    //             alert(this.data);
-    //         }
-    //     });
-    // });
-
-    document.addEventListener('keydown', function (e) {
-        if (e.keyCode == 119) { // F8
-            debugger;
+    $("#search-from").on('submit',function (e) {
+        e.preventDefault();
+        var keywords = $('#keywords').val();
+        var deparmentVal = $('#catalog').val();
+        var department="";
+        if(deparmentVal !== 0){
+            department = $('#catalog').children(':selected').text();;
         }
-    }, {
-        capture: true
+        window.location.href = "books-list-view.php?keyword="+keywords+"&department="+department;
     });
+
+    // document.addEventListener('keydown', function (e) {
+    //     if (e.keyCode == 119) { // F8
+    //         debugger;
+    //     }
+    // }, {
+    //     capture: true
+    // });
 
 </script>
 <!-- Start: Welcome Section -->
@@ -130,7 +128,7 @@
                         <h2 class="section-title">Welcome to the SuLibrary</h2>
                         <span class="underline left"></span>
                         <p class="lead">Welcome to the whole new way of ordering books</p>
-                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humor, or randomized words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humor, or non-characteristic words etc.</p>
+                        <p>We Have covered almost all the areas to provide all the book our students need, we will continue to work to bring more features which will help students to make effective use of our resources. </p>
 <!--                        <a class="btn btn-primary" href="#">Read More</a>-->
                     </div>
                 </div>
@@ -143,7 +141,10 @@
                                 <div class="fact-icon">
                                     <i class="ebook"></i>
                                 </div>
-                                <span>Books<strong class="fact-counter">45780</strong></span>
+                                <?php
+                                $totalBooks=(new dbhelper)->__totalBooks();
+                                ?>
+                                <span>Books<strong class="fact-counter"><?php echo $totalBooks?></strong></span>
                             </div>
                         </li>
                         <li class="bg-green">
@@ -151,7 +152,10 @@
                                 <div class="fact-icon">
                                     <i class="eaudio"></i>
                                 </div>
-                                <span>eBooks<strong class="fact-counter">32450</strong></span>
+                                <?php
+                                $totalBooks=(new dbhelper)->__totalBooks();
+                                ?>
+                                <span>eBooks<strong class="fact-counter"><?php echo $totalBooks?></strong></span>
                             </div>
                         </li>
                         <li class="bg-red">
@@ -159,15 +163,15 @@
                                 <div class="fact-icon">
                                     <i class="magazine"></i>
                                 </div>
-                                <span>Study materials<strong class="fact-counter">14450</strong></span>
+                                <span>Research Blogs<strong class="fact-counter">9</strong></span>
                             </div>
                         </li>
                         <li class="bg-blue">
                             <div class="fact-item">
                                 <div class="fact-icon">
-                                    <i class="videos"></i>
+                                    <i class="magazine"></i>
                                 </div>
-                                <span>Research Blogs<strong class="fact-counter">32450</strong></span>
+                                <span>latest news</span>
                             </div>
                         </li>
                     </ul>

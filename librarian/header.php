@@ -180,7 +180,7 @@
                         <a class="nav-link" href="manage-orders.php"><i data-feather="file"></i><span>Order</span></a>
                     </li>
                     <li>
-                        <a class="nav-link" href="#"><i data-feather="file"></i><span>returns</span></a>
+                        <a class="nav-link" href="manage-returns.php"><i data-feather="file"></i><span>returns</span></a>
                     </li>
                     <li>
                         <a class="nav-link" href="#"><i data-feather="file"></i><span>chat</span></a>
@@ -200,18 +200,18 @@
                         <ul class="dropdown-menu">
                             <li><a class="nav-link" href="add-books.php">add books</a></li>
                             <li><a class="nav-link" href="view-book.php">view books</a></li>
-                            <li><a class="nav-link" href="breadcrumb.html">manage</a></li>
+                            <li><a class="nav-link" href="#">manage</a></li>
 
 
 
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" ><i
+                        <a href="shortage-alert.php" ><i
                                 data-feather="shopping-bag"></i><span>shortage alerts</span></a>
                        </li>
                     <li class="dropdown">
-                        <a href="#" ><i
+                        <a href="manage-students.php" ><i
                                     data-feather="shopping-bag"></i><span>Student records</span></a>
                     </li>
 

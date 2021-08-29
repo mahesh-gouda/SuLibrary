@@ -112,21 +112,21 @@
                         <option>Hotel Management</option>
                     </select>
                 </div>
-<!--                <div class="form-group">-->
-<!--                    <label>Book Image:</label>-->
-<!--                    <div class="custom-file">-->
-<!--                        <input type="file" class="custom-file-input" accept="image/png, image/jpeg">-->
-<!--                        <label class="custom-file-label">Choose file</label>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="form-group">-->
-<!--                    <label>Book pdf:</label>-->
-<!--                    <div class="custom-file">-->
-<!--                        <input type="file" class="custom-file-input"-->
-<!--                               accept="application/pdf, application/vnd.ms-excel">-->
-<!--                        <label class="custom-file-label">Choose file</label>-->
-<!--                    </div>-->
-<!--                </div>-->
+                <div class="form-group">
+                    <label>Book Image:</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" accept="image/png, image/jpeg">
+                        <label class="custom-file-label">Choose file</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Book pdf:</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input"
+                               accept="application/pdf, application/vnd.ms-excel">
+                        <label class="custom-file-label">Choose file</label>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label>Book Description:</label>
                     <textarea class="form-control" rows="4"></textarea>
@@ -211,7 +211,27 @@
             method: 'POST',
             type:'POST',
             success: function (response) {
-                alert(response);
+                if (response === "1") {
+                    setTimeout(function() {
+                        swal({
+                            title: "Success",
+                            text: "Books Added successfully",
+                            type: "success"
+                        }, function() {
+                            location.reload();
+                        });
+                    }, 100);
+                } else {
+                    setTimeout(function() {
+                        swal({
+                            title: "Failed!",
+                            text: " Books Adding Failed",
+                            type: "warning"
+                        }, function() {
+
+                        });
+                    }, 100);
+                }
 
             }
         });
