@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 15, 2021 at 08:22 AM
+-- Generation Time: Oct 10, 2021 at 08:24 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.9
 
@@ -43,12 +43,12 @@ INSERT INTO `accession_details` (`id`, `book_id`, `accession_number`, `status`) 
 (2, 13, '243', 0),
 (3, 13, '5', 0),
 (4, 14, '432', 1),
-(5, 14, '1234', 0),
+(5, 14, '1234', 1),
 (6, 14, '876', 0),
 (7, 15, '4322', 1),
 (8, 15, '1232', 1),
-(9, 15, '8276', 0),
-(10, 16, '4222', 0),
+(9, 15, '8276', 1),
+(10, 16, '4222', 1),
 (11, 16, '12032', 0),
 (12, 16, '82786', 0),
 (13, 17, '42222', 0),
@@ -95,14 +95,14 @@ INSERT INTO `accession_details` (`id`, `book_id`, `accession_number`, `status`) 
 (58, 24, '99999999999999', 0),
 (59, 25, '99999999999999', 0),
 (60, 15, '234', 1),
-(61, 15, '43234', 0),
+(61, 15, '43234', 1),
 (62, 15, '2123', 0),
 (63, 22, 'werewwwww', 0),
 (64, 22, 'ewee', 0),
 (65, 22, 'ewe', 0),
 (66, 22, 'ewewe', 0),
 (67, 39, '6543', 1),
-(68, 39, '2345', 0),
+(68, 39, '2345', 1),
 (69, 39, '65433', 0);
 
 -- --------------------------------------------------------
@@ -238,12 +238,17 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `order_id`, `card_number`, `accession_number`, `book_id`, `user_id`, `order_date`, `return_date`, `status`, `comment`, `returned_date`, `fine`, `aprove_time`) VALUES
-(31, 112, 1234, 6543, 39, 9, '2021-08-30', '2021-09-19', 0, NULL, NULL, 0, NULL),
+(31, 112, 1234, 6543, 39, 9, '2021-08-30', '2021-09-19', -1, 'ff', NULL, 0, '13:41:00'),
 (32, 113, 12345, 432, 14, 17, '2021-08-30', '2021-09-19', -1, 'you collect your book from us', NULL, 0, '14:40:27'),
-(33, 114, 54321, 2147483647, 25, 17, '2021-08-30', '2021-09-19', 0, NULL, NULL, 0, NULL),
+(33, 114, 54321, 2147483647, 25, 17, '2021-08-30', '2021-09-19', 20, 'erryy', NULL, 0, '13:43:13'),
 (34, 115, 43234, 4322, 15, 9, '2021-08-30', '2021-09-19', 20, 'you got 2 hours to collect', NULL, 0, '12:57:36'),
 (35, 116, 6543, 422222, 18, 9, '2021-08-30', '2021-09-19', 0, NULL, NULL, 0, NULL),
-(36, 117, 2342, 1232, 15, 9, '2021-08-30', '2021-09-19', 0, NULL, NULL, 0, NULL);
+(36, 117, 2342, 1232, 15, 9, '2021-08-30', '2021-09-19', 0, NULL, NULL, 0, NULL),
+(37, 118, 0, 1234, 14, 22, '2021-10-10', '2021-10-30', 3, 'tt', '2021-10-10', 0, '13:37:35'),
+(38, 119, 0, 8276, 15, 22, '2021-10-10', '0000-00-00', -1, '', NULL, 0, '13:43:33'),
+(39, 120, 0, 4222, 16, 22, '2021-10-10', '0000-00-00', -1, '', NULL, 0, '13:43:36'),
+(40, 121, 0, 2345, 39, 22, '2021-10-10', '0000-00-00', -1, 'tt', NULL, 0, '13:43:42'),
+(41, 122, 0, 43234, 15, 22, '2021-10-10', '0000-00-00', 0, NULL, NULL, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -268,7 +273,15 @@ INSERT INTO `pending_aproval` (`id`, `user_id`, `registration_date`) VALUES
 (10, 14, '2021-08-30'),
 (11, 15, '2021-08-30'),
 (12, 16, '2021-08-30'),
-(14, 18, '2021-08-30');
+(14, 18, '2021-08-30'),
+(15, 20, '2021-10-08'),
+(18, 23, '2021-10-10'),
+(19, 24, '2021-10-10'),
+(20, 25, '2021-10-10'),
+(21, 26, '2021-10-10'),
+(22, 27, '2021-10-10'),
+(23, 28, '2021-10-10'),
+(24, 29, '2021-10-10');
 
 -- --------------------------------------------------------
 
@@ -344,8 +357,14 @@ INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `phone`, `email`, `co
 (14, 'ee', 'qw', 3333332242, 'agent@gmail.cs', 'mca', '345s3', '32s', 'student', NULL, 0),
 (15, 'dfs', 'qw', 3333332298, 'abc@abc.s', 'mba', '345324', '1234', 'student', NULL, 0),
 (16, 'sdfs', 'sfsf', 12345678933, 'abc@abc.coms', 'mba', '3453242', 'sdf', 'student', NULL, 0),
-(17, 'new user', '', 9876543213, 'maheshgouda133@gmail.com', 'mca', '123456', 'mahesh@99', 'student', NULL, 0),
-(18, 'user', '', 2345678901, 'user@gamil.com', 'mca', '32', '1234', 'student', '2023-01-12', 0);
+(18, 'user', '', 2345678901, 'user@gamil.com', 'mca', '32', '1234', 'student', '2023-01-12', 0),
+(19, 'librarian', 'su', 1234567890, 'lib@su.com', '', NULL, 'su@1234', 'librarian', NULL, 1),
+(20, 'pp', 'pp', 1234567890, 'lib@gmail.com', 'mca', NULL, '1234', 'student', '0000-00-00', 0),
+(21, 'ppppppppp', 'ppppppppppppp', 9876543210, 'abc@abc.comde', 'mca', '', '1234', 'professor', '0000-00-00', 1),
+(22, '123', 'qwe', 8876543432, 'abc12@abc.com', 'mca', NULL, '1234', 'professor', NULL, 0),
+(23, 'ganesh', 'ganesh', 9876543210, 'ganeshnayakhdk@gmail.com', 'mba', '12345', '1234', 'student', '2023-02-22', 0),
+(28, 'mahesh', 'gouda', 1234567894, 'maheshgouda133@gmail.com', 'mba', '1234s3', '1234', 'student', '2023-06-02', 0),
+(29, 'user', '', 7631983472, 'sda@gmail.com', 'mba', '213w21', '2134', 'student', '2022-08-06', 0);
 
 --
 -- Indexes for dumped tables
@@ -449,13 +468,13 @@ ALTER TABLE `cart`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `pending_aproval`
 --
 ALTER TABLE `pending_aproval`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `professor`
@@ -473,7 +492,7 @@ ALTER TABLE `reserved`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
