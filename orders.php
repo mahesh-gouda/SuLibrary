@@ -37,14 +37,14 @@ if(!isset($_SESSION['user_id'])){
 <section class="page-banner services-banner">
     <div class="container">
         <div class="banner-header">
-            <h2>Books & Media Listing</h2>
+            <h2>Orders</h2>
             <span class="underline center"></span>
-            <p class="lead">Proin ac eros pellentesque dolor pharetra tempo.</p>
+            <p class="lead">Your orders are listed here.</p>
         </div>
         <div class="breadcrumb">
             <ul>
                 <li><a href="index-2.html">Home</a></li>
-                <li>Books & Media</li>
+                <li>Orders</li>
             </ul>
         </div>
     </div>
