@@ -1,4 +1,7 @@
-<?php include_once __DIR__. '\header.php' ?>
+<?php include_once __DIR__. '\header.php';
+include_once '..\dbHelper\dbhelper.php';
+?>
+
 <div class="main-content">
     <section class="section">
         <div class="row ">
@@ -10,7 +13,10 @@
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
                                     <div class="card-content">
                                         <h5 class="font-15">New Registrations</h5>
-                                        <h2 class="mb-3 font-18">2</h2>
+                                        <?php
+                                        $totalRegistration =(new dbhelper)->__getNewRegistrationCount();
+                                        ?>
+                                        <h2 class="mb-3 font-18"><?php echo $totalRegistration;?></h2>
 <!--                                        <p class="mb-0"><span class="col-green">10%</span> Increase</p>-->
                                     </div>
                                 </div>
@@ -32,7 +38,10 @@
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
                                     <div class="card-content">
                                         <h5 class="font-15"> Orders Requests</h5>
-                                        <h2 class="mb-3 font-18">87</h2>
+                                        <?php
+                                        $totalOders =(new dbhelper)->__getTotalOrdersCount();
+                                        ?>
+                                        <h2 class="mb-3 font-18"><?php echo $totalOders ?></h2>
 <!--                                        <p class="mb-0"><span class="col-orange">09%</span> Decrease</p>-->
                                     </div>
                                 </div>
@@ -54,7 +63,10 @@
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
                                     <div class="card-content">
                                         <h5 class="font-15">Return requests</h5>
-                                        <h2 class="mb-3 font-18">18</h2>
+                                        <?php
+                                        $totalReturnRequests =(new dbhelper)->__getReturnRequestCount();
+                                        ?>
+                                        <h2 class="mb-3 font-18"><?php echo $totalReturnRequests;?></h2>
 <!--                                        <p class="mb-0"><span class="col-green">18%</span>-->
 <!--                                            Increase</p>-->
                                     </div>
@@ -77,7 +89,10 @@
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
                                     <div class="card-content">
                                         <h5 class="font-15">Pending Returns</h5>
-                                        <h2 class="mb-3 font-18">97</h2>
+                                        <?php
+                                        $totalPendingReturns =(new dbhelper)->__getPendingReturns();
+                                        ?>
+                                        <h2 class="mb-3 font-18"><?php echo $totalPendingReturns?></h2>
 <!--                                        <p class="mb-0"><span class="col-green">42%</span> Increase</p>-->
                                     </div>
                                 </div>

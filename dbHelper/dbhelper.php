@@ -120,6 +120,18 @@ class dbhelper extends connect
         }
     }
 
+    public function __getNewRegistrationCount(){
+        try{
+            $sql = "SELECT * FROM sulibrary.pending_aproval";
+            $stmt = $this->__connect()->query($sql);
+
+                return $stmt->rowCount();
+
+        }catch (ErrorException $e){
+            die($e);
+        }
+    }
+
     public function __getPendingAprovalProfessor(){
         try{
             $role="professor";
@@ -487,7 +499,19 @@ class dbhelper extends connect
         }
     }
 
+    public function __getTotalOrdersCount()
+    {
+        try {
+            $sql =  "SELECT * FROM  sulibrary.orders where  orders.status=0";
+            $stmt = $this->__connect()->query($sql);
 
+              return  $rows=$stmt->rowCount();
+
+        } catch (ErrorException $e) {
+            die($e);
+
+        }
+    }
 
     public function __getPendingOrderInfo($id)
     {
@@ -566,6 +590,32 @@ class dbhelper extends connect
                 $rows=$stmt->fetchAll();
                 return $rows;
             }else return 0;
+        } catch (ErrorException $e) {
+            die($e);
+
+        }
+    }
+
+    public function __getReturnRequestCount()
+    {
+        try {
+            $sql =  "SELECT * FROM  sulibrary.orders  where orders.status=2 ";
+            $stmt = $this->__connect()->query($sql);
+            return $stmt->rowCount();
+
+        } catch (ErrorException $e) {
+            die($e);
+
+        }
+    }
+
+    public function __getPendingReturns()
+    {
+        try {
+            $sql =  "SELECT * FROM  sulibrary.orders  where orders.status=20 ";
+            $stmt = $this->__connect()->query($sql);
+            return $stmt->rowCount();
+
         } catch (ErrorException $e) {
             die($e);
 
