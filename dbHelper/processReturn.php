@@ -12,6 +12,10 @@ if(isset($_POST['id'])){
     $oid=$_POST['id'];
     $dbh = new dbhelper();
     $result= $dbh->__confirmReturn($oid);
+    $accession = (new dbhelper)->__getAccessioFromOrder($_POST['id']);
+    $cardnumber = (new dbhelper)->__getCardNumberFromOrder($_POST['id']);
+    (new dbhelper)->__setAccessionStatusToZero($accession);
+    (new dbhelper)->__setCardStatustoZero($cardnumber);
     echo $result;
 }
 

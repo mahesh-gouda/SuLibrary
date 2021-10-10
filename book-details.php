@@ -39,7 +39,8 @@ if(!isset($_SESSION['user_id'])){
         <div class="banner-header">
             <h2>Books & Media Listing</h2>
             <span class="underline center"></span>
-            <p class="lead">Proin ac eros pellentesque dolor pharetra tempo.</p>
+            <p class="lead">Proceede with your order
+                .</p>
         </div>
         <div class="breadcrumb">
             <ul>
@@ -245,19 +246,21 @@ if(!isset($_SESSION['user_id'])){
                 type: 'post',
                 data: {'acn': acn, 'bookid': bookid},
                 success: function (response) {
+                    $('#overlay').hide();
                     var result = $.trim(response);
                     if (result === "0") {
                         $("#divErr").css("display", "block");
                         $("#errMsg").html("Please Login to make an order");
                     } else if (result === "1") {
                         $("#divErr").css("display", "block");
-                        $("#errMsg").html("Your Verification is pending");
+                        $("#errMsg").html("You do not have permission to make an order!");
                     } else if (result === "2") {
                         $("#divErr").css("display", "block");
                         $("#errMsg").html("opps!! You Have no cards Left to Order");
                     } else if (result === "4") {
                         window.location.href = "order-success.php";
                     } else {
+                        alert(response);
                         $("#divErr").css("display", "block");
                         $("#errMsg").html("opps!! some error occured");
                     }

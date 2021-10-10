@@ -1,9 +1,6 @@
 <?php include_once __DIR__. '\header.php';
  include_once '..\dbHelper\dbhelper.php';
 
-
-
-
  ?>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"

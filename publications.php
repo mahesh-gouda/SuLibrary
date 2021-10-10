@@ -2,14 +2,14 @@
 <section class="page-banner services-banner">
     <div class="container">
         <div class="banner-header">
-            <h2>Books & Media Listing</h2>
+            <h2>Srinivas Publications</h2>
             <span class="underline center"></span>
-            <p class="lead">Proin ac eros pellentesque dolor pharetra tempo.</p>
+            <p class="lead">Large collection of Srinivas university publication collections.</p>
         </div>
         <div class="breadcrumb">
             <ul>
                 <li><a href="index.php">Home</a></li>
-                <li>Books & Media</li>
+                <li>Srinivas Publications</li>
             </ul>
         </div>
     </div>

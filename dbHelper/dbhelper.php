@@ -2,7 +2,7 @@
 include_once __DIR__.'/connect.php';
 class dbhelper extends connect
 {
-    public function __createUser($fname,$lname,$course,$rollno,$email,$phone,$passwd,$role){
+    public function __createUser($fname,$lname,$course,$rollno,$email,$phone,$passwd,$role,$expdate){
         $sql = "SELECT * FROM sulibrary.users where email='$email' or regno='$rollno'";
         $stmt = $this->__connect()->query($sql);
         if($stmt->rowCount())
@@ -11,9 +11,34 @@ class dbhelper extends connect
         }
         else{
 
-            $sql="INSERT INTO sulibrary.users(`first_name`, `last_name`, `phone`, `email`, `course`, `regno`, `password`, `role`) VALUES (?,?,?,?,?,?,?,?);";
+            $sql="INSERT INTO sulibrary.users(`first_name`, `last_name`, `phone`, `email`, `course`, `regno`, `password`, `role`,exipry_date) VALUES (?,?,?,?,?,?,?,?,?);";
             $stmt=$this->__connect()->prepare($sql);
-            $stmt->execute([$fname,$lname,$phone,$email,$course,$rollno,$passwd,$role]);
+            $stmt->execute([$fname,$lname,$phone,$email,$course,$rollno,$passwd,$role,$expdate]);
+
+            $userId=dbhelper::__getUserID($email);
+            $date=date('Y-m-d');
+            $sql="INSERT INTO sulibrary.pending_aproval(`user_id`, `registration_date`) VALUES (?,?);";
+            $stmt=$this->__connect()->prepare($sql);
+            $stmt->execute([$userId,$date]);
+
+            return 1;
+
+
+        }
+    }
+
+    public function __createProfessor($fname,$lname,$course,$email,$phone,$passwd,$role){
+        $sql = "SELECT * FROM sulibrary.users where email='$email' ";
+        $stmt = $this->__connect()->query($sql);
+        if($stmt->rowCount())
+        {
+            return 0;
+        }
+        else{
+
+            $sql="INSERT INTO sulibrary.users(`first_name`, `last_name`, `phone`, `email`, `course`, `password`, `role`) VALUES (?,?,?,?,?,?,?);";
+            $stmt=$this->__connect()->prepare($sql);
+            $stmt->execute([$fname,$lname,$phone,$email,$course,$passwd,$role]);
 
             $userId=dbhelper::__getUserID($email);
             $date=date('Y-m-d');
@@ -83,7 +108,8 @@ class dbhelper extends connect
 
     public function __getPendingAprovalUsers(){
         try{
-            $sql = "SELECT * FROM sulibrary.pending_aproval inner join sulibrary.users on users.user_id= pending_aproval.user_id";
+            $role="student";
+            $sql = "SELECT * FROM sulibrary.pending_aproval inner join sulibrary.users on users.user_id= pending_aproval.user_id and users.role='$role'";
             $stmt = $this->__connect()->query($sql);
             if($stmt->rowCount() > 0){
                 return $stmt->fetchAll();
@@ -94,6 +120,19 @@ class dbhelper extends connect
         }
     }
 
+    public function __getPendingAprovalProfessor(){
+        try{
+            $role="professor";
+            $sql = "SELECT * FROM sulibrary.pending_aproval inner join sulibrary.users on users.user_id= pending_aproval.user_id and users.role='$role'";
+            $stmt = $this->__connect()->query($sql);
+            if($stmt->rowCount() > 0){
+                return $stmt->fetchAll();
+            }else
+                return 0;
+        }catch (ErrorException $e){
+            die($e);
+        }
+    }
     public function __getPendingAprovalUserInfo($id)
     {
         try{
@@ -149,6 +188,15 @@ class dbhelper extends connect
     }catch (ErrorException $e){
         die($e);
     }
+    }
+
+    public function __updateUserStatus($userid){
+        try{
+            $sql = "UPDATE sulibrary.users set status = 1 WHERE user_id='$userid'";
+            $this->__connect()->query($sql);
+        }catch (ErrorException $e){
+            die($e);
+        }
     }
 
     public function __saveBookDetails($title, $author, $edition, $department, $description, $stock,$booktype)
@@ -424,10 +472,10 @@ class dbhelper extends connect
         }
     }
 
-    public function __getPendingOrders()
+    public function __getPendingOrders($role)
     {
         try {
-            $sql =  "SELECT * FROM  sulibrary.orders inner join sulibrary.users on orders.user_id=users.user_id inner join sulibrary.books on books.book_id=orders.book_id where status=0;";
+            $sql =  "SELECT * FROM  sulibrary.orders inner join sulibrary.users on orders.user_id=users.user_id inner join sulibrary.books on books.book_id=orders.book_id where orders.status=0 and users.role='$role';";
             $stmt = $this->__connect()->query($sql);
             if($stmt->rowCount()){
                 $rows=$stmt->fetchAll();
@@ -438,6 +486,8 @@ class dbhelper extends connect
 
         }
     }
+
+
 
     public function __getPendingOrderInfo($id)
     {
@@ -463,12 +513,12 @@ class dbhelper extends connect
         }
     }
 
-    public function __saveOrderConfirmation($orderid, $comment)
+    public function __saveOrderConfirmation($orderid, $comment,$time)
     {
         try{
-            $sql="UPDATE sulibrary.orders SET status = 1 , comment= ? where id =?;";
+            $sql="UPDATE sulibrary.orders SET status = 1 , comment= ?,aprove_time=? where id =?;";
             $stmt=$this->__connect()->prepare($sql);
-            $stmt->execute([$comment,$orderid]);
+            $stmt->execute([$comment,$time,$orderid]);
             return 1;
         }catch (ErrorException $e){
             die($e);
@@ -510,7 +560,22 @@ class dbhelper extends connect
     public function __getReturnRequests()
     {
         try {
-            $sql =  "SELECT * FROM  sulibrary.orders inner join sulibrary.users on orders.user_id=users.user_id inner join sulibrary.books on books.book_id=orders.book_id where status=2;";
+            $sql =  "SELECT * FROM  sulibrary.orders inner join sulibrary.users on orders.user_id=users.user_id inner join sulibrary.books on books.book_id=orders.book_id where orders.status=2 and users.role='student';";
+            $stmt = $this->__connect()->query($sql);
+            if($stmt->rowCount()){
+                $rows=$stmt->fetchAll();
+                return $rows;
+            }else return 0;
+        } catch (ErrorException $e) {
+            die($e);
+
+        }
+    }
+
+    public function __getProfessorReturnRequests()
+    {
+        try {
+            $sql =  "SELECT * FROM  sulibrary.orders inner join sulibrary.users on orders.user_id=users.user_id inner join sulibrary.books on books.book_id=orders.book_id where orders.status=2 and users.role='professor';";
             $stmt = $this->__connect()->query($sql);
             if($stmt->rowCount()){
                 $rows=$stmt->fetchAll();
@@ -554,6 +619,20 @@ class dbhelper extends connect
     {
         try{
             $sql = "SELECT * FROM sulibrary.users where role='student'";
+            $stmt = $this->__connect()->query($sql);
+            if($stmt->rowCount() > 0){
+                return $stmt->fetchAll();
+            }else
+                return 0;
+        }catch (ErrorException $e){
+            die($e);
+        }
+    }
+
+    public function __getProfessorDetails()
+    {
+        try{
+            $sql = "SELECT * FROM sulibrary.users where role='professor'";
             $stmt = $this->__connect()->query($sql);
             if($stmt->rowCount() > 0){
                 return $stmt->fetchAll();
@@ -841,6 +920,247 @@ class dbhelper extends connect
         } catch (ErrorException $e) {
             die($e);
         }
+    }
+
+    public function __saveFileToDatabase($file_name_new, $book_id)
+    {
+        try{
+            $sql="UPDATE  sulibrary.books SET pdf =? where book_id =?;";
+            $stmt=$this->__connect()->prepare($sql);
+            $stmt->execute([$file_name_new,$book_id]);
+
+
+        }catch (ErrorException $e){
+            die($e);
+
+        }
+    }
+
+    public function __deleteBook($bookId)
+    {
+        try{
+            $sql = "DELETE FROM sulibrary.books where book_id='$bookId'";
+            $stmt = $this->__connect()->query($sql);
+            return 1;
+        }catch (ErrorException $e){
+            die($e);
+        }
+    }
+
+    public function __assignEbook($bookId, $userId)
+    {
+        try {
+            $sql = "INSERT INTO sulibrary.books_owned(user_id, book_id) VALUES  (?,?);";
+            $stmt=$this->__connect()->prepare($sql);
+            $stmt->execute([$userId,$bookId]);
+            return 1;
+        } catch (ErrorException $e) {
+            die($e);
+
+        }
+    }
+
+    public function __checkEBookExists($userId, $bookId)
+    {
+        try {
+            $sql = "Select * From sulibrary.books_owned where user_id = '$userId' and book_id='$bookId'";
+            $stmt = $this->__connect()->query($sql);
+            return $stmt->rowCount();
+
+        } catch (ErrorException $e) {
+            die($e);
+
+        }
+    }
+
+    public function __getUserEBooks($userId)
+    {
+        try {
+            $sql = "Select * From sulibrary.books_owned inner join sulibrary.books on books_owned.book_id=books.book_id where user_id = '$userId'";
+            $stmt = $this->__connect()->query($sql);
+            if ($stmt->rowCount() > 0) {
+                $rows = $stmt->fetchAll();
+                return $rows;
+            }else return 0;
+        } catch (ErrorException $e) {
+            die($e);
+
+        }
+    }
+
+    public function __removeEbook($bookId, $userId)
+    {
+        try{
+            $sql = "DELETE FROM sulibrary.books_owned where book_id='$bookId' and user_id='$userId'";
+            $stmt = $this->__connect()->query($sql);
+            return 1;
+        }catch (ErrorException $e){
+            die($e);
+        }
+    }
+
+    public function __fetchProfessor($username, $password)
+    {
+        $sql = "SELECT * FROM sulibrary.professor where username='$username' and password ='$password' ";
+        $stmt = $this->__connect()->query($sql);
+        return $stmt;
+    }
+
+    public function __oderReservedBooks()
+    {
+
+
+    }
+
+    public function __expireAccount($userId)
+    {
+        try{
+            $sql="UPDATE  sulibrary.user SET status =1 where user_id =?;";
+            $stmt=$this->__connect()->prepare($sql);
+            $stmt->execute([$userId]);
+
+
+        }catch (ErrorException $e){
+            die($e);
+
+        }
+    }
+
+    public function __isExpired($userid)
+    {
+        try {
+            if(isset($_SESSION['user_id'])) {
+                $sql = "SELECT * FROM sulibrary.users where staus=1 and user_id='$userid' ;";
+                $stmt = $this->__connect()->query($sql);
+                if ($stmt->rowCount()) {
+                    return 1;
+                } else
+                    return 0;
+            } else return -1;
+        }catch (PDOException $ex){
+            return -1;
+        }
+    }
+
+    public function __getPendingOrdersAprovals()
+    {
+        try {
+            $sql =  "SELECT * FROM  sulibrary.orders inner join sulibrary.users on orders.user_id=users.user_id inner join sulibrary.books on books.book_id=orders.book_id where orders.status=1;";
+            $stmt = $this->__connect()->query($sql);
+            if($stmt->rowCount()){
+                $rows=$stmt->fetchAll();
+                return $rows;
+            }else return 0;
+        } catch (ErrorException $e) {
+            die($e);
+
+        }
+    }
+
+    public function __assignOrder($aid)
+    {
+        try{
+            $sql="UPDATE  sulibrary.orders SET status =20 where id =?;";
+            $stmt=$this->__connect()->prepare($sql);
+            $stmt->execute([$aid]);
+            return 1;
+
+        }catch (ErrorException $e){
+            die($e);
+
+        }
+
+    }
+
+    public function __cancelOrder($aid)
+    {
+        try{
+            $sql="UPDATE  sulibrary.orders SET status =-1 where id =?;";
+            $stmt=$this->__connect()->prepare($sql);
+            $stmt->execute([$aid]);
+            return 1;
+
+        }catch (ErrorException $e){
+            die($e);
+
+        }
+    }
+
+    public function __getAccessioFromOrder($rejectId)
+    {
+        try {
+            $sql =  "SELECT * FROM  sulibrary.orders  where order_id='$rejectId'";
+            $stmt = $this->__connect()->query($sql);
+            if($stmt->rowCount()){
+                $rows=$stmt->fetchAll();
+               foreach ($rows as $row){
+                 return  $row['accession_number'];
+               }
+            }else return 0;
+        } catch (ErrorException $e) {
+            die($e);
+
+        }
+    }
+
+    public function __setAccessionStatusToZero($accession)
+    {
+        try{
+            $sql="UPDATE  sulibrary.accession_details SET status=0 where accession_number=?;";
+            $stmt=$this->__connect()->prepare($sql);
+            $stmt->execute([$accession]);
+
+
+        }catch (ErrorException $e){
+            die($e);
+
+        }
+    }
+
+    public function __getCardNumberFromOrder($rejectId)
+    {
+        try {
+            $sql =  "SELECT * FROM  sulibrary.orders  where order_id='$rejectId'";
+            $stmt = $this->__connect()->query($sql);
+            if($stmt->rowCount()){
+                $rows=$stmt->fetchAll();
+                foreach ($rows as $row){
+                    return  $row['card_number'];
+                }
+            }else return 0;
+        } catch (ErrorException $e) {
+            die($e);
+
+        }
+    }
+
+    public function __setCardStatustoZero($cardnumber)
+    {
+        try{
+            $sql="UPDATE  sulibrary.cards SET status =0 where card_number =?;";
+            $stmt=$this->__connect()->prepare($sql);
+            $stmt->execute([$cardnumber]);
+        } catch (ErrorException $e){
+            die($e);
+        }
+    }
+
+    public function __getUserRole($userid)
+    {
+        try {
+            $sql =  "SELECT * FROM  sulibrary.users  where user_id='$userid'";
+            $stmt = $this->__connect()->query($sql);
+            if($stmt->rowCount()){
+                $rows=$stmt->fetchAll();
+                foreach ($rows as $row){
+                    return  $row['role'];
+                }
+            }else return 0;
+        } catch (ErrorException $e) {
+            die($e);
+
+        }
+
     }
 
 

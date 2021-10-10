@@ -1,13 +1,12 @@
-function getOTP() {
-    $(".err").html("").hide();
+function sendRegistrationMessage() {
     var email = $("#email").val();
-    var name = $("#name").val();
-    if(name.length !== 0)
+    var password = $("#password").val();
+    if(email.length !== 0)
     {
         var input ={
-            "name" : name,
+            "password" : password,
             "email" : email,
-            "action" : "get_otp"
+            "action" : "register_message"
         }
         // $("#loading-image").show();
         $.ajax({

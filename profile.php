@@ -172,7 +172,7 @@ include_once 'dbHelper/dbhelper.php';
         <div class="banner-header">
             <h2>Profile</h2>
             <span class="underline center"></span>
-            <p class="lead">Proin ac eros pellentesque dolor pharetra tempo.</p>
+            <p class="lead">All You need is at one place.</p>
         </div>
         <div class="breadcrumb">
             <ul>
@@ -204,12 +204,22 @@ include_once 'dbHelper/dbhelper.php';
                     <div class="profile-head">
 
                         <?php
+                        $daysLeftToExpiry="";
                         $userId = $_SESSION['user_id'];
                         $userDetails=(new dbhelper)->__getUserRecords();
                         if($userDetails != 0){
 
                         foreach ($userDetails as $user){
 
+                            function dateDiff($cin, $cout){
+                                $date1_ts = strtotime($cin);
+                                $date2_ts = strtotime($cout);
+                                $diff = $date2_ts - $date1_ts;
+                                return abs(round($diff / 86400));
+                            }
+                            $expdate=$user['exipry_date'];
+                            $date=date('Y-m-d');
+                            $daysLeftToExpiry = dateDiff($date,$expdate);
 
                         ?>
                         <h4>
@@ -234,6 +244,12 @@ include_once 'dbHelper/dbhelper.php';
                             $verificationStaus="Aproved By Librarian";
                             $color ="green";
                             $icon="fa-check-circle-o";
+                        }
+                        if($daysLeftToExpiry <= 0){
+                            (new dbhelper)->__expireAccount($userId);
+                            $verificationStaus="Account Expired";
+                            $color ="red";
+                            $icon="fa-warning";
                         }
 
 
@@ -264,7 +280,7 @@ include_once 'dbHelper/dbhelper.php';
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <h5 style="color: red"><i class="fa fa-warning" > book due date 12/34/1203</i> </h5>
+                    <h5 style="color: red; visibility: hidden"><i class="fa fa-warning" > book due date 12/34/1203</i> </h5>
                 </div>
             </div>
             <div class="row" style="margin-top: 0%;">
@@ -537,19 +553,18 @@ include_once 'dbHelper/dbhelper.php';
                                         <tr>
                                             <th class="product-name">Sl</th>
                                             <th class="product-name">Book</th>
-                                            <th class="product-name">Card no</th>
-                                            <th class="product-quantity">Available Date</th>
-                                            <th class="product-price">Return date </th>
-                                            <th class="product-subtotal">Fines</th>
+                                            <th class="product-name">Author</th>
+                                            <th class="product-quantity">Edition</th>
+                                            <th class="product-price">department </th>
                                             <th class="product-subtotal">Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <?php
-                                        $issuedBookDetails=(new dbhelper)->__issuedBookDeatails($userId);
-                                        if($issuedBookDetails != 0){
+                                        $userEBooks=(new dbhelper)->__getUserEBooks($userId);
+                                        if($userEBooks != 0){
                                             $i=0;
-                                            foreach ($issuedBookDetails as $row){
+                                            foreach ($userEBooks as $row){
 
                                                 ?>
 
@@ -567,19 +582,17 @@ include_once 'dbHelper/dbhelper.php';
                                                 </span>
                                                     </td>
                                                     <td >
-                                                        <?php echo $row['card_number'];?>
+                                                        <?php echo $row['author'];?>
                                                     </td>
                                                     <td >
-                                                        <?php echo $row['order_date'];?>
+                                                        <?php echo $row['edition'];?>
                                                     </td>
                                                     <td >
-                                                        <?php echo $row['return_date'];?>
+                                                        <?php echo $row['book_department'];?>
                                                     </td>
                                                     <td>
-                                                        <?php echo $row['fine'];?>
-                                                    </td>
-                                                    <td>
-                                                        <input type="button" onclick="requestReturn( <?php echo $row['order_id'];?> , <?php echo $row['accession_number'];?>)" class="btn btn-primary" value="Return">
+                                                        <a class="btn btn-primary" href="e-read.php?path=<?php echo $row['pdf'] ?>" >View </a>
+                                                        <input type="button" onclick="removeEbook( <?php echo $row['book_id'];?> , <?php echo $userId?>)" class="btn btn-primary" value="Remove">
                                                     </td>
                                                 </tr>
                                             <?php   }
@@ -593,9 +606,9 @@ include_once 'dbHelper/dbhelper.php';
 
                         </div>
                         <div class="tab-pane fade tab tab4" style="margin-top: 0%;" id="profilePage" role="tabpanel" aria-labelledby="profile-tab">
-                            <div class="col d-flex justify-content-start">
-                                <button class="btn btnStyle "  type="button"><i class="fa fa-edit"></i>Edit Info</button>
-                            </div>
+<!--                            <div class="col d-flex justify-content-start">-->
+<!--                                <button class="btn btnStyle "  type="button"><i class="fa fa-edit"></i>Edit Info</button>-->
+<!--                            </div>-->
                             <div class="row flex-lg-nowrap">
 
                                 <div class="col">
@@ -610,15 +623,22 @@ include_once 'dbHelper/dbhelper.php';
                                                                         <div class="col">
                                                                             <div class="row">
                                                                                 <div class="col">
+                                                                                    <?php
+
+                                                                                    $userDetails=(new dbhelper)->__getUserRecords();
+                                                                                    if($userDetails != 0){
+
+                                                                                    foreach ($userDetails as $user){
+                                                                                    ?>
                                                                                     <div class="form-group">
-                                                                                        <label>Full Name</label>
-                                                                                        <input class="form-control" type="text" name="name" placeholder="John Smith" value="John Smith">
+                                                                                        <label>first Name</label>
+                                                                                        <input class="form-control" type="text" name="name" placeholder="John Smith" value="<?php echo $user['first_name']?>">
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col">
                                                                                     <div class="form-group">
-                                                                                        <label>Username</label>
-                                                                                        <input class="form-control" type="text" name="username" placeholder="johnny.s" value="johnny.s">
+                                                                                        <label>last name</label>
+                                                                                        <input class="form-control" type="text" name="username" placeholder="johnny.s" value="<?php echo $user['last_name']?>">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -626,13 +646,13 @@ include_once 'dbHelper/dbhelper.php';
                                                                                 <div class="col">
                                                                                     <div class="form-group">
                                                                                         <label>Email</label>
-                                                                                        <input class="form-control" type="text" placeholder="user@example.com">
+                                                                                        <input class="form-control" type="text" placeholder="<?php echo $user['email']?>">
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col">
                                                                                     <div class="form-group">
                                                                                         <label>Phone</label>
-                                                                                        <input class="form-control" type="number" placeholder="+91-">
+                                                                                        <input class="form-control" type="number" placeholder="+91-" value="<?php echo $user['phone']?>">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -646,6 +666,7 @@ include_once 'dbHelper/dbhelper.php';
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                    <?php }  }?>
                                                                     <div class="row">
                                                                         <div class="col">
                                                                             <div class="mb-2"><b>Change Password</b></div>
@@ -668,7 +689,7 @@ include_once 'dbHelper/dbhelper.php';
                                                                                 <div class="col">
                                                                                     <div class="form-group">
                                                                                         <label>Confirm <span class="d-none d-xl-inline">Password</span></label>
-                                                                                        <input class="form-control" type="password" placeholder="••••••"></div>
+                                                                                        <input class="form-control" type="password" placeholder="••••••"> </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -744,6 +765,43 @@ include_once 'dbHelper/dbhelper.php';
         });
 
 
+    }
+    function removeEbook(bookId,userId){
+        swal({
+            title: "confirmation",
+            text: "Do you want to Remove this book ?",
+            type: "info",
+            showCancelButton: true
+
+        }, function() {
+            $.ajax({
+                url: 'dbHelper/removeEBook.php',
+                type: 'post',
+                data:{'bookId':bookId,'userId':userId} ,
+                success:function (response) {
+                    var result = $.trim(response);
+
+                    if(result === "0"){
+                        swal({
+                            title: "Failed",
+                            text: "Remove Failed",
+                            type: "warning",
+
+                        });
+                    } else if(result === "1"){
+                        swal({
+                            title: "Removed",
+                            text: "E Book Removed From Profile",
+                            type: "success",
+
+                        }, function() {
+                            location.reload();
+                        });
+                    }
+                }
+            });
+
+        });
     }
 </script>
 

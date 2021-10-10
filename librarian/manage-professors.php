@@ -13,7 +13,7 @@ include_once '..\dbHelper\dbhelper.php';
     <div class="col">
         <div class="card">
             <div class="card-header">
-                <h4>Students Record</h4>
+                <h4>Professor's Records</h4>
             </div>
             <div class="alert alert-success alert-has-icon" id="messegeBlock" style="display: none">
                 <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
@@ -28,17 +28,15 @@ include_once '..\dbHelper\dbhelper.php';
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Student Name</th>
+                            <th>Professor Name</th>
                             <th>Email</th>
                             <th>phone</th>
                             <th>course</th>
-                            <th>Reg_no</th>
-                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php
-                        $rows =(new dbhelper)->__getStudentDetails();
+                        $rows =(new dbhelper)->__getProfessorDetails();
                         if($rows != 0 )
                         {
                             $i=1;
@@ -49,7 +47,6 @@ include_once '..\dbHelper\dbhelper.php';
                                 $phone=$row['phone'];
                                 $email=$row['email'];
                                 $course=$row['course'];
-                                $regno=$row['regno'];
 
 
                                 echo '
@@ -59,8 +56,6 @@ include_once '..\dbHelper\dbhelper.php';
                         <td>'.$email.'</td>
                         <td>'.$phone.'</td>
                         <td>'.$course.'</td>
-                        <td>'.$regno.'</td>
-                        <td><a href="edit_cards.php?uid='.$uid.'"   type="button" id="'.$uid.'" class="btn btn btn-primary" >Edit Cards </a></td>
                     </tr>';
                                 $i++;
                             }

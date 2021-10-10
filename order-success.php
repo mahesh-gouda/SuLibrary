@@ -4,9 +4,9 @@
 <section class="page-banner services-banner">
     <div class="container">
         <div class="banner-header">
-            <h2>Books & Media Listing</h2>
+            <h2>Order Successful</h2>
             <span class="underline center"></span>
-            <p class="lead">Proin ac eros pellentesque dolor pharetra tempo.</p>
+            <p class="lead">Your Order has been placed successfully.</p>
         </div>
         <div class="breadcrumb">
             <ul>

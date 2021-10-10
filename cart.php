@@ -8,11 +8,11 @@
                 <div class="banner-header">
                     <h2>Cart Page</h2>
                     <span class="underline center"></span>
-                    <p class="lead">Proin ac eros pellentesque dolor pharetra tempo.</p>
+                    <p class="lead">Items in the book bag are listed here.</p>
                 </div>
                 <div class="breadcrumb">
                     <ul>
-                        <li><a href="index-2.html">Home</a></li>
+                        <li><a href="index.php">Home</a></li>
                         <li>Dashboard</li>
                     </ul>
                 </div>

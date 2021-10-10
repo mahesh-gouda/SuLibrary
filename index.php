@@ -22,7 +22,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <!-- Controls -->
@@ -490,23 +489,23 @@
 <!-- End: Features -->
 
 <!-- Start: Newsletter -->
-<section class="newsletter section-padding">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="center-content">
-                    <h2 class="section-title">Subscribe to our Journal</h2>
-                    <span class="underline center"></span>
-                    <p class="lead">subscribe to the Srinivas publications using email</p>
-                </div>
-                <div class="form-group">
-                    <input class="form-control" placeholder="Enter your Email!" id="newsletter" name="newsletter" type="email">
-                    <input class="form-control" value="Subscribe" type="submit">
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+<!--<section class="newsletter section-padding">-->
+<!--    <div class="container">-->
+<!--        <div class="row">-->
+<!--            <div class="col-md-8 col-md-offset-2">-->
+<!--                <div class="center-content">-->
+<!--                    <h2 class="section-title">Subscribe to our Journal</h2>-->
+<!--                    <span class="underline center"></span>-->
+<!--                    <p class="lead">subscribe to the Srinivas publications using email</p>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <input class="form-control" placeholder="Enter your Email!" id="newsletter" name="newsletter" type="email">-->
+<!--                    <input class="form-control" value="Subscribe" type="submit">-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</section>-->
 <!-- End: Newsletter -->
 
 <!-- Start: Meet Staff -->

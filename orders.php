@@ -158,6 +158,8 @@ if(!isset($_SESSION['user_id'])){
                                                     $status="Returned";
                                                 }elseif($hasOdered== 4) {
                                                     $status="Return Rejected";
+                                                }elseif($hasOdered== 20) {
+                                                    $status="Book Assigned";
                                                 }
                                             } ?>
                                             <h3 style="color: #e30b23"><strong style="color: #0f57ec"> Status :</strong> <?php echo $status?></h3><br>

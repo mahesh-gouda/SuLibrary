@@ -11,8 +11,15 @@ if(isset($_POST['username'])){
     if ($total_row > 0) {
         $rows = $result->fetchAll();
         foreach ($rows as $row) {
-            $_SESSION["user_id"] = $row['user_id'];
-            echo 1;
+            if($row['role']==="professor"){
+                $_SESSION['p_id']= $row['user_id'];
+                $_SESSION["user_id"] = $row['user_id'];
+                echo 1;
+            }
+            else {
+                $_SESSION["user_id"] = $row['user_id'];
+                echo 1;
+            }
         }
     } else {
         echo "invalid Credential Provided";

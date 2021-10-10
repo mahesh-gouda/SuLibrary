@@ -88,22 +88,22 @@
 
 
 
-            <form action="" method="post" id="eMaterialForm" style="display: none;">
+            <form action="" method="post" id="eMaterialForm" style="display: none;" enctype="multipart/form-data">
                 <div class="form-group">
                     <label>Book Title</label>
-                    <input type="text" class="form-control">
+                    <input type="text" id="etitle" name="etitle" class="form-control">
                 </div>
                 <div class="form-group">
                     <label>Book Edition:</label>
-                    <input type="text" class="form-control">
+                    <input type="text" id="eedition" name="eedition" class="form-control">
                 </div>
                 <div class="form-group">
                     <label>Book Author:</label>
-                    <input type="text" class="form-control">
+                    <input type="text " id="eauthor" name="eauthor" class="form-control">
                 </div>
                 <div class="form-group">
                     <label>Book Department:</label>
-                    <select class="form-control" id="exampleFormControlSelect1">
+                    <select class="form-control" id="edepartment" name="edepartment">
                         <option selected="" disabled="">--Select Department--</option>
                         <option>Computer Science</option>
                         <option>Business</option>
@@ -115,21 +115,21 @@
                 <div class="form-group">
                     <label>Book Image:</label>
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" accept="image/png, image/jpeg">
-                        <label class="custom-file-label">Choose file</label>
+                        <input onchange="javascript: esetLableName();" type="file" id="ecoverPhoto" name="ecoverPhoto" class="custom-file-input" accept="image/png, image/jpeg">
+                        <label class="custom-file-label" id="ecoverPhotoLable">Choose file</label>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label>Book pdf:</label>
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input"
-                               accept="application/pdf, application/vnd.ms-excel">
-                        <label class="custom-file-label">Choose file</label>
+                        <input onchange="javascript: esetPdfLableName();" type="file" class="custom-file-input" id="pdf" name="pdf" >
+                        <label class="custom-file-label" id="pdfLable">Choose file</label>
                     </div>
                 </div>
                 <div class="form-group">
                     <label>Book Description:</label>
-                    <textarea class="form-control" rows="4"></textarea>
+                    <textarea class="form-control" id="edescription" name="edescription" rows="4"></textarea>
                 </div>
 
 
@@ -173,6 +173,18 @@
        var filename = $('#coverPhoto').val().split('\\').pop();;
        $('#coverPhotoLable').html(filename);
     }
+
+    function esetLableName(){
+        var filename = $('#ecoverPhoto').val().split('\\').pop();;
+        $('#ecoverPhotoLable').html(filename);
+    }
+
+
+    function esetPdfLableName(){
+        var filename = $('#pdf').val().split('\\').pop();;
+        $('#pdfLable').html(filename);
+    }
+
 
     $('#libraryBookFrom').submit(function (event) {
        event.preventDefault();
@@ -239,6 +251,84 @@
 
 
     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    $('#eMaterialForm').submit(function (event) {
+        event.preventDefault();
+        // var title = $("#etitle").val();
+        // var edition = $("#eedition").val();
+        // var author = $("#eauthor").val();
+        // var department = $("#edepartment").children(':selected').text();
+        // var description = $("#edescription").val();
+        // var coverPhoto = $("#ecoverPhoto").prop('files')[0];
+        // var pdf = $("#pdf").prop('files')[1];
+        //
+        //
+        // var data = new FormData();
+        // data.append('title', title);
+        // data.append('edition', edition);
+        // data.append('author', author);
+        // data.append('department', department);
+        // data.append('description', description);
+        // data.append('cover', coverPhoto);
+        // data.append('file', pdf);
+
+        var form = $('#eMaterialForm')[0];
+        var data = new FormData(form);
+
+        $.ajax({
+            url: '../dbHelper/save-ebook.php',
+            data: data,
+            cache: false,
+            enctype: 'multipart/form-data',
+            contentType: false,
+            processData: false,
+            method: 'POST',
+            type:'POST',
+            success: function (response) {
+                if (response === "1") {
+                    setTimeout(function() {
+                        swal({
+                            title: "Success",
+                            text: "Books Added successfully",
+                            type: "success"
+                        }, function() {
+                            location.reload();
+                        });
+                    }, 100);
+                } else {
+                    setTimeout(function() {
+                        swal({
+                            title: "Failed!",
+                            text: " Books Adding Failed",
+                            type: "warning"
+                        }, function() {
+
+                        });
+                    }, 100);
+                }
+
+            }
+        });
+
+
+
+    });
+
 </script>
 
 <?php include_once '../librarian/footer.php' ?>

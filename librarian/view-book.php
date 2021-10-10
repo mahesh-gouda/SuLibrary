@@ -1,4 +1,9 @@
 <?php include_once '../librarian/header.php' ?>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
     <div class="main-content">
         <div class="container-fluid">
             <div class="row">
@@ -90,39 +95,42 @@
                                                         $stock = $row['total_stock'];
                                                         $bookType = $row['book_type'];
                                                         $coverImg=$row['cover_photo'];
-                                               echo ' <tr role="row" class="odd">
+                                                        $pdf=$row['pdf']; ?>
+
+                                                       <tr role="row" class="odd">
                                                     <td class="sorting_1">'.$i.'</td>
-                                                    <td><img class="img-fluid rounded" src="../books/'.$coverImg.'"
+                                                    <td><img class="img-fluid rounded" src="../books/<?php echo $coverImg ?>"
                                                              alt=""></td>
-                                                    <td>'.$title.'</td>
-                                                    <td>'.$edition.'</td>
-                                                    <td>'.$author.'</td>
-                                                    <td>'.$department.'</td>
+                                                    <td><?php echo $title ?></td>
+                                                    <td><?php echo $edition ?></td>
+                                                    <td><?php echo $author ?></td>
+                                                    <td><?php echo $department ?></td>
                                                     <td>
-                                                        <p class="mb-0">'.$description.'</p>
+                                                        <p class="mb-0"><?php echo $description ?></p>
                                                     </td>
-                                                    <td>'.$stock.'</td>
+                                                    <td><?php echo $stock ?></td>
                                                     <td>
-                                                      '.$bookType.'
+                                                        <?php echo $bookType ?>
                                                     </td>
                                                     <td>
+                                                        <?php if($bookType == "e book") {?>
                                                         <div class="flex align-items-center list-user-action">
                                                             <a  data-toggle="tooltip"
                                                                 data-placement="top" title=""
-                                                                data-original-title="pdf" href="#"><i class="fa fa-file-pdf"  style="font-size: 1.5em;"></i></a>
+                                                                data-original-title="pdf" href="../books/pdf/<?php echo $pdf ?>" target="_blank"><i class="fa fa-file-pdf"  style="font-size: 1.5em;"></i></a>
                                                         </div>
+                                                            <?php } else echo  ' ';?>
                                                     </td>
                                                     <td>
                                                         <div class="flex align-items-center list-user-action">
                                                             <a  data-toggle="tooltip"
                                                                data-placement="top" title="" data-original-title="Edit"
                                                                href="add-books.php" ><i class="fa fa-edit" style="font-size: 1.5em;"></i></a>
-                                                            <a  data-toggle="tooltip"
-                                                               data-placement="top" title=""
-                                                               data-original-title="Delete" href="#"><i class="fas fa-trash-alt"  style="font-size: 1.5em;"></i></a>
+                                                            <a  onclick="deleteBook(<?php echo $bookId ?>)"><i class="fas fa-trash-alt"  style="font-size: 1.5em;"></i></a>
                                                         </div>
                                                     </td>
                                                 </tr>';
+                                                <?php
                                                $i++;
                                                         }
                                                 }?>
@@ -169,4 +177,53 @@
             </div>
         </div>
     </div>
+
+<script>
+    function deleteBook(bookId){
+       swal({
+            title: "confirmation",
+            text: "Do you want to delete this Book ?",
+            type: "info",
+            showCancelButton: true
+
+        }, function() {
+           $.ajax({
+                url: '../dbHelper/deleteBook.php',
+                type: 'post',
+                data:{'bookId':bookId},
+                success:function (response) {
+                    var result = $.trim(response);
+
+                    if(result === "1"){
+                        setTimeout(function() {
+                            swal({
+                                title: "Success!",
+                                text: "Book Deleted successfully",
+                                type: "success"
+                            }, function() {
+                                location.reload();
+                            });
+                        }, 100);
+                    } else{
+                        setTimeout(function() {
+                            swal({
+                                title: "failed!",
+                                text: "Failed to delte Books",
+                                type: "warning"
+                            }, function() {
+                                location.reload();
+                            });
+                        }, 100);
+                    }
+                }
+           });
+
+        });
+
+
+    }
+</script>
+
+
+
 <?php include_once '../librarian/footer.php' ?>

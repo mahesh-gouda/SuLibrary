@@ -34,16 +34,14 @@ include_once '..\dbHelper\dbhelper.php';
                             <th>Book id</th>
                             <th>Accession</th>
                             <th>order date</th>
-                            <th>Student name</th>
+                            <th>Professor name</th>
                             <th>course</th>
-                            <th>Reg_no</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php
-
-                        $rows =(new dbhelper)->__getPendingOrders("student");
+                        $rows =(new dbhelper)->__getPendingOrders("professor");
                         if($rows != 0 )
                         {
                             $i=1;
@@ -54,7 +52,6 @@ include_once '..\dbHelper\dbhelper.php';
                                 $phone=$row['phone'];
                                 $email=$row['email'];
                                 $course=$row['course'];
-                                $regno=$row['regno'];
                                 $title=$row['title'];
                                 $book_id=$row['book_id'];
                                 $aceession=$row['accession_number'];
@@ -62,24 +59,23 @@ include_once '..\dbHelper\dbhelper.php';
                                 $status=$row['status'];
 
                                 ?>
-                    <tr>
-                        <td><?php echo $i?></td>
-                        <td><?php echo $title?> </td>
-                        <td><?php echo $book_id?></td>
-                        <td><?php echo $aceession?>'</td>
-                        <td><?php echo $orderdate?></td>
-                        <td><?php echo $fname?></td>
-                        <td><?php echo $course?></td>
-                         <td><?php echo $regno?></td>
-                        <td>
+                                <tr>
+                                    <td><?php echo $i?></td>
+                                    <td><?php echo $title?> </td>
+                                    <td><?php echo $book_id?></td>
+                                    <td><?php echo $aceession?>'</td>
+                                    <td><?php echo $orderdate?></td>
+                                    <td><?php echo $fname?></td>
+                                    <td><?php echo $course?></td>
+                                    <td>
 
-                            <input href="#" data-toggle="modal" data-target="#aprove" onclick="confirmOrder(id);" type="submit" id="<?php echo $oid?>" class="btn btn btn-primary" value="Aprove"> &nbsp;&nbsp;&nbsp;
+                                        <input href="#" data-toggle="modal" data-target="#aprove" onclick="confirmOrder(id);" type="submit" id="<?php echo $oid?>" class="btn btn btn-primary" value="Aprove"> &nbsp;&nbsp;&nbsp;
 
-                            <input type="button" id="<?php echo $oid?>" onclick="setRejectId(id)" data-toggle="modal" data-target="#reject"  class="btn btn-warning" value="Reject">
+                                        <input type="button" id="<?php echo $oid?>" onclick="setRejectId(id)" data-toggle="modal" data-target="#reject"  class="btn btn-warning" value="Reject">
 
 
-                        </td>
-                    </tr>
+                                    </td>
+                                </tr>
                                 <?php
                                 $i++;
                             }

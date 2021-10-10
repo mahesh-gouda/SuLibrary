@@ -15,7 +15,7 @@ include_once '..\dbHelper\dbhelper.php';
     <div class="col">
         <div class="card">
             <div class="card-header">
-                <h4>Pending Student Return requests</h4>
+                <h4>Pending Professor Return Request</h4>
             </div>
             <div class="alert alert-success alert-has-icon" id="messegeBlock" style="display: none">
                 <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
@@ -34,7 +34,7 @@ include_once '..\dbHelper\dbhelper.php';
                             <th>Book id</th>
                             <th>Accession</th>
                             <th>order date</th>
-                            <th>Student name</th>
+                            <th>Professosr name</th>
                             <th>course</th>
                             <th>Reg_no</th>
                             <th>Returned date</th>
@@ -44,7 +44,7 @@ include_once '..\dbHelper\dbhelper.php';
                         </thead>
                         <tbody>
                         <?php
-                        $rows =(new dbhelper)->__getReturnRequests();
+                        $rows =(new dbhelper)->__getProfessorReturnRequests();
                         if($rows != 0 )
                         {
                             $i=1;
@@ -55,7 +55,6 @@ include_once '..\dbHelper\dbhelper.php';
                                 $phone=$row['phone'];
                                 $email=$row['email'];
                                 $course=$row['course'];
-                                $regno=$row['regno'];
                                 $title=$row['title'];
                                 $book_id=$row['book_id'];
                                 $aceession=$row['accession_number'];

@@ -8,7 +8,8 @@
         <div class="banner-header">
             <h2>Signin</h2>
             <span class="underline center"></span>
-            <p class="lead">Signin to Srinivas university.</p>
+            <p class="lead">Sign in to Sulibrary
+                .</p>
         </div>
         <div class="breadcrumb">
             <ul>
@@ -33,13 +34,12 @@
                                         <div class="col-md-12" style="position: center">
                                             <div class="company-detail bg-dark margin-left">
                                                 <div class="signin-head">
-                                                    <h2>Sign in  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: #fd6600; font-size: medium;" href="register.php"> new user ? register here</a></h2>
                                                     <span class="underline left"></span>
                                                 </div>
                                                 <form id="loginForm" action="" class="login" method="post">
                                                     <p class="form-row form-row-first input-required">
                                                         <label>
-                                                            <span class="first-letter">Registered Email</span>
+                                                            <span class="first-letter">User name</span>
                                                             <span class="second-letter">*</span>
                                                         </label>
                                                         <input type="text"  id="username" name="username" class="input-text">
@@ -58,7 +58,7 @@
                                                             <label class="inline" for="rememberme">Remember me</label>
                                                         </p>
                                                         <p class="lost_password">
-                                                            <a style="color: white" href="#">Forgot password?</a>
+
                                                         </p>
                                                     </div>
 
@@ -97,7 +97,7 @@
 
 
                     $.ajax({
-                        url: 'dbHelper/processLogin.php',
+                        url: 'dbHelper/processProfessorLogin.php',
                         type: 'post',
                         data: $("#loginForm").serialize(),
                         success: function (response) {

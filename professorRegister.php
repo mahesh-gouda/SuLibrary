@@ -3,9 +3,9 @@
 <!-- Start: Page Banner -->
 <script src="js/emailScript.js"></script>
 <script
-        src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-        crossorigin="anonymous"></script>
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 <section class="page-banner services-banner">
@@ -31,14 +31,14 @@
 
     <section >
         <div class="container">
-        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-lg-12 col-xl-11">
                     <div class="card text-black" style="border-radius: 25px;">
                         <div class="card-body p-md-5">
                             <div class="row justify-content-center">
                                 <div class="col-md-10 col-lg-8 col-xl-8 order-2 order-lg-1">
 
-                                    <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
+                                    <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Professor Sign up</p>
 
                                     <form id="registerFrom" name="registerFrom" method="post" action="" class="mx-1 mx-md-4" enctype="multipart/form-data">
                                         <div class="card" style="border: none">
@@ -65,29 +65,10 @@
 
                                                         </select>
                                                     </div>
-                                                    <div class="form-group col-md-6">
-                                                        <label for="regNum" id="regNumlable">Register number</label>
-                                                        <input type="text" class="form-control" id="regNum" name="regNum" >
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-row">
-                                                    <div class="form-group col-md-6">
-                                                        <label for="course" id="semlable">Sem</label>
-                                                        <select  id="sem" name="sem" class="form-control" >
-                                                            <option selected value="0">--Select Course--</option>
-                                                            <option value="1">I</option>
-                                                            <option value="2">II</option>
-                                                            <option value="3">III</option>
-                                                            <option value="4">IV</option>
-                                                            <option value="5">V</option>
-                                                            <option value="6">VI</option>
-
-                                                        </select>
-                                                    </div>
-
 
                                                 </div>
+
+
 
                                                 <div class="form-group">
                                                     <label for="phone" id="phoneLable">Phone</label>
@@ -101,23 +82,23 @@
                                                         <input type="email" class="form-control" id="email" name="email"  >
 
                                                     </div>
-<!--                                                    <div class="form-group col-md-4">-->
-<!--                                                        <label for="sendOtp"></label>-->
-<!--                                                        <input type="button" class="form-control btn btn-info" style="border-radius: 25px;  border: 2px solid" value="send otp" id="sendOtp" name="sendOpt">-->
-<!--                                                    </div>-->
+                                                    <!--                                                    <div class="form-group col-md-4">-->
+                                                    <!--                                                        <label for="sendOtp"></label>-->
+                                                    <!--                                                        <input type="button" class="form-control btn btn-info" style="border-radius: 25px;  border: 2px solid" value="send otp" id="sendOtp" name="sendOpt">-->
+                                                    <!--                                                    </div>-->
                                                 </div>
-<!--                                                <div class="form-row">-->
-<!--                                                    <div class="form-group col-md-8">-->
-<!---->
-<!--                                                        <label for="otp" id="verfyotpLable">enter Otp</label>-->
-<!--                                                        <input type="text" class="form-control" id="otp"  name="otp" placeholder="">-->
-<!---->
-<!--                                                    </div>-->
-<!--                                                    <div class="form-group col-md-4">-->
-<!--                                                        <label for="verify"></label>-->
-<!--                                                        <input type="button" class="form-control btn  btn-info " style="border-radius: 25px;  border: 2px solid"  value="Verify" id="verify">-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
+                                                <!--                                                <div class="form-row">-->
+                                                <!--                                                    <div class="form-group col-md-8">-->
+                                                <!---->
+                                                <!--                                                        <label for="otp" id="verfyotpLable">enter Otp</label>-->
+                                                <!--                                                        <input type="text" class="form-control" id="otp"  name="otp" placeholder="">-->
+                                                <!---->
+                                                <!--                                                    </div>-->
+                                                <!--                                                    <div class="form-group col-md-4">-->
+                                                <!--                                                        <label for="verify"></label>-->
+                                                <!--                                                        <input type="button" class="form-control btn  btn-info " style="border-radius: 25px;  border: 2px solid"  value="Verify" id="verify">-->
+                                                <!--                                                    </div>-->
+                                                <!--                                                </div>-->
                                                 <div class="form-row">
                                                     <div class="form-group col-md-6">
 
@@ -136,17 +117,15 @@
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="checkbox" id="termsCheck" name="termsCheck">
                                                         <label class="form-check-label" for="gridCheck" id="termsLable">
-                                                           &nbsp;&nbsp;&nbsp; I Agree for Terms And Conditions
+                                                            &nbsp;&nbsp;&nbsp; I Agree for Terms And Conditions
                                                         </label>
-                                                        <label class="form-check-label" for="gridCheck" id="termsLable">
-                                                         <a style="color: #0d6aad" href="professorRegister.php"> &nbsp;&nbsp;or Register as professor</a>
-                                                        </label>
+
                                                     </div>
                                                 </div>
                                                 <br>
                                             </div>
 
-                                                <button class="btn btn-primary">Submit</button>
+                                            <button class="btn btn-primary">Submit</button>
 
                                         </div>
 
@@ -183,8 +162,8 @@
             event.preventDefault();
             if ($.trim($("#firstname").val()).length > 0) {
                 if ($.trim($("#course").val()) !== "0") {
-                    if ($.trim($("#sem").val()) !== "0") {
-                        if ($.trim($("#regNum").val()).length > 0) {
+
+
                             if ($.trim($("#phone").val()).length > 0) {
 
                                 if ($.trim($("#email").val()).length > 0) {
@@ -196,7 +175,7 @@
                                                     $('#overlay').show();
                                                     setTimeout(function () {
                                                         $.ajax({
-                                                            url: 'dbHelper/processRegister.php',
+                                                            url: 'dbHelper/processProfRegister.php',
                                                             type: 'post',
                                                             data: $("#registerFrom").serialize(),
                                                             success: function (response) {
@@ -212,12 +191,13 @@
                                                                         window.location.href = "signin.php";
                                                                     });
                                                                 } else {
-                                                                    swal({
-                                                                        title: "OPPS!!",
-                                                                        text: "InValid Details Found!! Registration failed",
-                                                                        type: "warning",
-
-                                                                    });
+                                                                    alert(result);
+                                                                    // swal({
+                                                                    //     title: "OPPS!!",
+                                                                    //     text: "InValid Details Found!! Registration failed",
+                                                                    //     type: "warning",
+                                                                    //
+                                                                    // });
                                                                 }
                                                             }
                                                         });
@@ -259,6 +239,8 @@
 
                                 }
 
+
+
                             } else {
                                 $("#phoneLable").css("color", "#fa0606")
                                 $("#phone").css("border", "3px solid #fa0606");
@@ -267,18 +249,8 @@
                             }
 
 
-                        } else {
-                            $("#regNumlable").css("color", "#fa0606")
-                            $("#regNum").css("border", "3px solid #fa0606");
-                            $("#regNum").focus();
 
-                        }
-                    }else {
-                        $("#semlable").css("color","#fa0606")
-                        $("#sem").css("border", "3px solid #fa0606");
-                        $("#sem").focus();
 
-                    }
 
                 } else {
                     $("#courselable").css("color","#fa0606")
@@ -344,7 +316,6 @@
 
 
 </script>
-
 
 <!--<script type="text/javascript">-->
 <!---->

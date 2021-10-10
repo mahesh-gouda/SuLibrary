@@ -1,4 +1,8 @@
-<?php  include_once '..\dbHelper\dbhelper.php'; ?>
+<?php  include_once '..\dbHelper\dbhelper.php';
+session_start();
+if(!isset($_SESSION["admin_id"])){
+    header("Location:login.php");
+}?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -54,35 +58,37 @@
 
 
 
-                <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
-                                                             class="nav-link nav-link-lg message-toggle"><i
-                                data-feather="mail"></i>
-                        <span class="badge headerBadge1">
-                6 </span> </a>
-                    <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
-                        <div class="dropdown-header">
-                            Messages
-                            <div class="float-right">
-                                <a href="#">Mark All As Read</a>
-                            </div>
-                        </div>
-                        <div class="dropdown-list-content dropdown-list-message">
-                            <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar
-											text-white"> <img alt="image" src="assets/img/users/user-1.png" class="rounded-circle">
-                  </span> <span class="dropdown-item-desc"> <span class="message-user">John
-                      Deo</span>
-                    <span class="time messege-text">Please check your mail !!</span>
-                    <span class="time">2 Min Ago</span>
-                  </span>
+<!--                <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"-->
+<!--                                                             class="nav-link nav-link-lg message-toggle"><i-->
+<!--                                data-feather="mail"></i>-->
+<!--                        <span class="badge headerBadge1">-->
+<!--                6 </span> </a>-->
+<!--                    <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">-->
+<!--                        <div class="dropdown-header">-->
+<!--                            Messages-->
+<!--                            <div class="float-right">-->
+<!--                                <a href="#">Mark All As Read</a>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="dropdown-list-content dropdown-list-message">-->
+<!--                            <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar-->
+<!--											text-white"> <img alt="image" src="assets/img/users/user-1.png" class="rounded-circle">-->
+<!--                  </span> <span class="dropdown-item-desc"> <span class="message-user">John-->
+<!--                      Deo</span>-->
+<!--                    <span class="time messege-text">Please check your mail !!</span>-->
+<!--                    <span class="time">2 Min Ago</span>-->
+<!--                  </span>-->
+<!---->
+<!--                        </div>-->
+<!--                        <div class="dropdown-footer text-center">-->
+<!--                            <a href="#">View All <i class="fas fa-chevron-right"></i></a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </li>-->
 
-                        </div>
-                        <div class="dropdown-footer text-center">
-                            <a href="#">View All <i class="fas fa-chevron-right"></i></a>
-                        </div>
-                    </div>
+                <li class="dropdown dropdown-list-toggle">
+                    <a class="nav-link notification-toggle nav-link-lg" href="logout.php" style="color: #b749ca; font-weight: bold" onclick="window.location.href='logout.php'">logout</a>
                 </li>
-
-
 
                 <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
                                                              class="nav-link notification-toggle nav-link-lg"><i data-feather="bell" class="bell"></i>
@@ -142,28 +148,28 @@
 
 
 
-                <li class="dropdown"><a href="#" data-toggle="dropdown"
-                                        class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="assets/img/user.png"
-                                                                                                         class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
-                    <div class="dropdown-menu dropdown-menu-right pullDown">
-                        <div class="dropdown-title">Hello Sarah Smith</div>
-                        <a href="profile.html" class="dropdown-item has-icon"> <i class="far
-										fa-user"></i> Profile
-                        </a> <a href="#" class="dropdown-item has-icon"> <i class="fas fa-cog"></i>
-                            Settings
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="auth-login.html" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i>
-                            Logout
-                        </a>
-                    </div>
-                </li>
+<!--                <li class="dropdown"><a href="#" data-toggle="dropdown"-->
+<!--                                        class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="assets/img/user.png"-->
+<!--                                                                                                         class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>-->
+<!--                    <div class="dropdown-menu dropdown-menu-right pullDown">-->
+<!--                        <div class="dropdown-title">Hello Sarah Smith</div>-->
+<!--                        <a href="profile.html" class="dropdown-item has-icon"> <i class="far-->
+<!--										fa-user"></i> Profile-->
+<!--                        </a> <a href="#" class="dropdown-item has-icon"> <i class="fas fa-cog"></i>-->
+<!--                            Settings-->
+<!--                        </a>-->
+<!--                        <div class="dropdown-divider"></div>-->
+<!--                        <a href="auth-login.html" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i>-->
+<!--                            Logout-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                </li>-->
             </ul>
         </nav>
         <div class="main-sidebar sidebar-style-2">
             <aside id="sidebar-wrapper">
                 <div class="sidebar-brand">
-                    <a href="index.html"> <img alt="image" src="assets/img/logo.png" class="header-logo" /> <span
+                    <a href="index.php"> <img alt="image" src="assets/img/logo.png" class="header-logo" /> <span
                             class="logo-name">SuLibrary</span>
                     </a>
                 </div>
@@ -172,48 +178,57 @@
                     <li class="dropdown active">
                         <a href="index.php" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
                     </li>
-                    <li >
-                        <a href="student-aproval.php" ><i data-feather="briefcase"></i><span>Student Aproval</span></a>
 
-                    </li>
-                    <li>
-                        <a class="nav-link" href="manage-orders.php"><i data-feather="file"></i><span>Order</span></a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="manage-returns.php"><i data-feather="file"></i><span>returns</span></a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="#"><i data-feather="file"></i><span>chat</span></a>
-                    </li>
                     <li class="dropdown">
-                        <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="command"></i><span>Orders</span></a>
+                        <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="shield"></i><span>Approval</span></a>
                         <ul class="dropdown-menu">
-                            <li><a class="nav-link" href="chat.html">student order</a></li>
-                            <li><a class="nav-link" href="portfolio.html">Professor Order</a></li>
+                            <li><a class="nav-link" href="student-aproval.php">student Approval</a></li>
+                            <li><a class="nav-link" href="professor-aproval.php">Professor Approval</a></li>
 
                         </ul>
                     </li>
 
+                    <li class="dropdown">
+                        <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="shopping-bag"></i><span>Orders</span></a>
+                        <ul class="dropdown-menu">
+                            <li><a class="nav-link" href="manage-orders.php">student order</a></li>
+                            <li><a class="nav-link" href="manage-professors-order.php">Professor Order</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="rotate-cw"></i><span>returns</span></a>
+                        <ul class="dropdown-menu">
+                            <li><a class="nav-link" href="manage-returns.php">student returns</a></li>
+                            <li><a class="nav-link" href="manage-professors-returns.php">Professor returns</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="assign-books.php"><i data-feather="book-open"></i><span>Confirm book Pickup</span></a>
+                    </li>
+
+
                     <li class="menu-header">Libarairy</li>
                     <li class="dropdown">
-                        <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="copy"></i><span>Books</span></a>
+                        <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="book"></i><span>Books</span></a>
                         <ul class="dropdown-menu">
                             <li><a class="nav-link" href="add-books.php">add books</a></li>
                             <li><a class="nav-link" href="view-book.php">view books</a></li>
                             <li><a class="nav-link" href="#">manage</a></li>
-
-
-
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="shortage-alert.php" ><i
-                                data-feather="shopping-bag"></i><span>shortage alerts</span></a>
+                                data-feather="alert-triangle"></i><span>shortage alerts</span></a>
                        </li>
+
                     <li class="dropdown">
-                        <a href="manage-students.php" ><i
-                                    data-feather="shopping-bag"></i><span>Student records</span></a>
+                        <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="database"></i><span>records</span></a>
+                        <ul class="dropdown-menu">
+                            <li><a class="nav-link" href="manage-students.php">Student records</a></li>
+                            <li><a class="nav-link" href="manage-professors.php">professor records</a></li>
+                        </ul>
                     </li>
+
 
 
 

@@ -1,7 +1,13 @@
 <?php
 ob_start();
 session_start(); ?>
-<?php  include_once 'dbHelper\dbhelper.php'; ?>
+<?php  include_once 'dbHelper\dbhelper.php';
+
+
+$rows =  (new dbhelper)->__oderReservedBooks();
+
+
+?>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -73,9 +79,9 @@ session_start(); ?>
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="topbar-info">
-                                        <a href="tel:+61-3-8376-6284"><i class="fa fa-phone"></i>+91-9538923365</a>
+                                        <a href="tel:+61-3-8376-6284"><i class="fa fa-phone"></i>+91 8242421566</a>
                                         <span>/</span>
-                                        <a href="mailto:support@libraria.com"><i class="fa fa-envelope"></i>mahesh@gmail.com</a>
+                                        <a href="mailto:srinivasuniversity@gmail.com"><i class="fa fa-envelope"></i>srinivasUniversity@gmail.com</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -91,52 +97,46 @@ session_start(); ?>
                                         <div class="header-cart dropdown">
                                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                                 <i class="fa fa-shopping-cart"></i>
-                                                <small id="cart-item">0</small>
+                                                <small id="cart-item"></small>
                                             </a>
                                             <div class="dropdown-menu cart-dropdown">
                                                 <ul>
+                                                    <?php
+                                                    if(isset($_SESSION["user_id"])){
+                                                    $userId = $_SESSION['user_id'];
+                                                    $booksinCart=(new dbhelper)->__getBooksInCart($userId);
+                                                        $i=0;
+                                                    if($booksinCart != 0){
+
+                                                    foreach ($booksinCart as $row){
+                                                        $i++;
+
+                                                    $bookId = $row['book_id'];
+                                                    $stock = (new dbhelper)->__getStocks($bookId);
+                                                    ?>
                                                     <li class="clearfix">
-                                                        <img src="images/header-cart-image-01.jpg" alt="cart item" />
+                                                        <img src="books/<?php echo $row['cover_photo']?>" alt="cart item" />
                                                         <div class="item-info">
                                                             <div class="name">
-                                                                <a href="#">The Great Gatsby</a>
+                                                                <a href="#"><?php echo $row['title']?></a>
                                                             </div>
-                                                            <div class="author"><strong>Author:</strong> F. Scott Fitzgerald</div>
-                                                            <div class="price">1 X $10.00</div>
+                                                            <div class="author"><strong>Author:</strong> <?php echo $row['author']?></div>
+                                                            <div class="price">Stock: <?php echo $stock?></div>
                                                         </div>
-                                                        <a class="remove" href="#"><i class="fa fa-trash-o"></i></a>
+                                                        <a class="remove"  onclick="removeFromCart( <?php echo $userId;?> , <?php echo $row['book_id'];?>)" href="#"><i class="fa fa-trash-o"></i></a>
                                                     </li>
-                                                    <li class="clearfix">
-                                                        <img src="images/header-cart-image-02.jpg" alt="cart item" />
-                                                        <div class="item-info">
-                                                            <div class="name">
-                                                                <a href="#">The Great Gatsby</a>
-                                                            </div>
-                                                            <div class="author"><strong>Author:</strong> F. Scott Fitzgerald</div>
-                                                            <div class="price">1 X $10.00</div>
-                                                        </div>
-                                                        <a class="remove" href="#"><i class="fa fa-trash-o"></i></a>
-                                                    </li>
-                                                    <li class="clearfix">
-                                                        <img src="images/header-cart-image-03.jpg" alt="cart item" />
-                                                        <div class="item-info">
-                                                            <div class="name">
-                                                                <a href="#">The Great Gatsby</a>
-                                                            </div>
-                                                            <div class="author"><strong>Author:</strong> F. Scott Fitzgerald</div>
-                                                            <div class="price">1 X $10.00</div>
-                                                        </div>
-                                                        <a class="remove" href="#"><i class="fa fa-trash-o"></i></a>
-                                                    </li>
+                                                   <?php }
+                                                    } ?>
+
                                                 </ul>
                                                 <div class="cart-total">
                                                     <div class="title">SubTotal</div>
-                                                    <div class="price">$30.00</div>
+                                                    <div class="price"> <?php echo $i ?></div>
                                                 </div>
                                                 <div class="cart-buttons">
                                                     <a href="cart.php" class="btn btn-dark-gray">View Cart</a>
-                                                    <a href="checkout.php" class="btn btn-primary">Checkout</a>
                                                 </div>
+                                                <?php     } ?>
                                             </div>
                                         </div>
                                     </div>
@@ -170,7 +170,7 @@ session_start(); ?>
                                 </li>
 
 
-                                <li><a href="contact.php">Contact</a></li>
+                                <li><a href="https://srinivasuniversity.edu.in/SrinivasUniversity/Contact">Contact</a></li>
                             </ul>
                         </div>
                     </div>
@@ -216,5 +216,38 @@ session_start(); ?>
         </div>
     </div>
 </header>
+<script>
+    function removeFromCart(userid,bookid){
+        $.ajax({
+            url: 'dbHelper/addToCart.php',
+            type: 'POST',
+            data: {"book_id": bookid,"user_id":userid},
+            success: function (response) {
+                if (response === "1") {
+                    setTimeout(function() {
+                        swal({
+                            title: "Success",
+                            text: "Removed from Cart",
+                            type: "success"
+                        }, function() {
+                            location.reload();
+                        });
+                    }, 100);
+                } else {
+                    setTimeout(function() {
+                        swal({
+                            title: "Failed!",
+                            text: "Remove Failed",
+                            type: "warning"
+                        }, function() {
+
+                        });
+                    }, 100);
+                }
+
+            }
+        });
+    }
+</script>
 <!-- End: Header Section -->
 
