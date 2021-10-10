@@ -62,8 +62,11 @@ include_once '..\dbHelper\dbhelper.php';
                                 $time1 = strtotime($time1);
                                 $time2 = strtotime(date("H:i:s"));
                                 $difference = round(abs($time2-$time1) / 3600, 2);
-                                if($difference<=0){
+                                if($difference>=24){
                                     (new dbhelper)->__cancelOrder($oid);
+                                    (new dbhelper)->__setAccessionStatusToZero($aceession);
+                                    $cardnumber = (new dbhelper)->__getCardNumberFromOrder($oid);
+                                    (new dbhelper)->__setCardStatustoZero($cardnumber);
                                 }else{
 
                                 ?>
@@ -110,7 +113,6 @@ include_once '..\dbHelper\dbhelper.php';
 
 
     function assignBook(aid){
-        alert("hello");
         $.ajax({
             url: '../dbHelper/confirmOrder.php',
             type: 'POST',

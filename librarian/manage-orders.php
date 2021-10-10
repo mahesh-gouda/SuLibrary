@@ -237,41 +237,6 @@ include_once '..\dbHelper\dbhelper.php';
         rejectid=id;
     }
 
-    $('#rejectForm').submit(function (event) {
-        event.preventDefault();
-        var remark = $('#remarks').val();
-        $.ajax({
-            url: '../dbHelper/confirmOrder.php',
-            type: 'POST',
-            data: {"rejectId": rejectid,"remarks":remark},
-            success: function (response) {
-                $('#reject').modal('hide');
-                if (response === "1") {
-                    setTimeout(function() {
-                        swal({
-                            title: "Order rejected!",
-                            text: "Order rejected successfully",
-                            type: "success"
-                        }, function() {
-                            location.reload();
-                        });
-                    }, 100);
-                } else {
-                    setTimeout(function() {
-                        swal({
-                            title: "Failed!",
-                            text: "Order rejected Failed",
-                            type: "warning"
-                        }, function() {
-
-                        });
-                    }, 100);
-                }
-            }
-        });
-    });
-
-
 
     $('#confirmFrom').submit(function (event) {
         event.preventDefault();
@@ -309,6 +274,44 @@ include_once '..\dbHelper\dbhelper.php';
         });
 
     });
+
+    $('#rejectForm').submit(function (event) {
+        event.preventDefault();
+        var remark = $('#remarks').val();
+        $.ajax({
+            url: '../dbHelper/confirmOrder.php',
+            type: 'POST',
+            data: {"rejectId": rejectid,"remarks":remark},
+            success: function (response) {
+                $('#reject').modal('hide');
+                if (response === "1") {
+                    setTimeout(function() {
+                        swal({
+                            title: "Order rejected!",
+                            text: "Order rejected successfully",
+                            type: "success"
+                        }, function() {
+                            location.reload();
+                        });
+                    }, 100);
+                } else {
+                    setTimeout(function() {
+                        swal({
+                            title: "Failed!",
+                            text: "Order rejected Failed",
+                            type: "warning"
+                        }, function() {
+
+                        });
+                    }, 100);
+                }
+            }
+        });
+    });
+
+
+
+
 
 
 

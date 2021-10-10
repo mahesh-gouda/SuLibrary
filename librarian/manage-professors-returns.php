@@ -36,9 +36,7 @@ include_once '..\dbHelper\dbhelper.php';
                             <th>order date</th>
                             <th>Professosr name</th>
                             <th>course</th>
-                            <th>Reg_no</th>
                             <th>Returned date</th>
-                            <th>Fine</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -59,7 +57,6 @@ include_once '..\dbHelper\dbhelper.php';
                                 $book_id=$row['book_id'];
                                 $aceession=$row['accession_number'];
                                 $orderdate=$row['order_date'];
-                                $fine=$row['fine'];
                                 $returnedDate=$row['returned_date'];
 
 
@@ -72,9 +69,7 @@ include_once '..\dbHelper\dbhelper.php';
                         <td>'.$orderdate.'</td>
                         <td>'.$fname.'</td>
                         <td>'.$course.'</td>
-                         <td>'.$regno.'</td>
                          <td>'.$returnedDate.'</td>
-                         <td>'.$fine.'</td>
                         <td><input href="#" data-toggle="modal" data-target="#aproveReturn" onclick="confirmReturn(id);" type="submit" id="'.$oid.'" class="btn btn btn-primary" value="Aproved"> &nbsp;&nbsp;&nbsp;<input type="button" id="'.$oid.'" onclick="rejectReturnRequest(id)" data-toggle="modal" data-target="#rejectReturn"  class="btn btn-warning" value="Reject"></td>
                     </tr>';
                                 $i++;

@@ -1159,8 +1159,6 @@ class dbhelper extends connect
             $sql="UPDATE  sulibrary.accession_details SET status=0 where accession_number=?;";
             $stmt=$this->__connect()->prepare($sql);
             $stmt->execute([$accession]);
-
-
         }catch (ErrorException $e){
             die($e);
 
