@@ -13,7 +13,7 @@ include_once '..\dbHelper\dbhelper.php';
     <div class="col">
         <div class="card">
             <div class="card-header">
-                <h4>Pending Approval</h4>
+                <h4>Pending Professor Approval</h4>
             </div>
             <div class="alert alert-success alert-has-icon" id="messegeBlock" style="display: none">
                 <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
@@ -28,12 +28,11 @@ include_once '..\dbHelper\dbhelper.php';
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Student Name</th>
+                            <th>Professor Name</th>
                             <th>Registration date</th>
                             <th>Email</th>
                             <th>phone</th>
                             <th>course</th>
-                            <th>Reg_no</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -51,7 +50,6 @@ include_once '..\dbHelper\dbhelper.php';
                                 $phone=$row['phone'];
                                 $email=$row['email'];
                                 $course=$row['course'];
-                                $regno=$row['regno'];
 
 
                                 echo '
@@ -62,7 +60,6 @@ include_once '..\dbHelper\dbhelper.php';
                         <td>'.$email.'</td>
                         <td>'.$phone.'</td>
                         <td>'.$course.'</td>
-                        <td>'.$regno.'</td>
                         <td><input href="#" data-toggle="modal" data-target="#aprove" onclick="assignValues(id);" type="button" id="'.$uid.'" class="btn btn btn-primary" value="Aprove"> &nbsp;&nbsp;&nbsp;<input type="button" id="'.$uid.'" class="btn btn-warning" value="Reject"></td>
                     </tr>';
                                 $i++;
