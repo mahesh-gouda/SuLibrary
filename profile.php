@@ -896,6 +896,7 @@ include_once 'dbHelper/dbhelper.php';
             $('.tab5').css({'display':'none'});
             $('.tab3').css({'display':'block'});
         }
+
         function profileClicked() {
             $('.tab1').css({'display':'none'});
             $('.tab2').css({'display':'none'});

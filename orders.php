@@ -122,7 +122,7 @@ if(!isset($_SESSION['user_id'])){
                                             <p><strong>Remarks by lecturer  :</strong><?php echo $comment?></p>
                                             <div class="float-right">
                                              <?php
-                                             if($hasOdered==20 || $hasOdered==4){
+                                             if($hasOdered==20 || $hasOdered==4)  {
                                                  ?>
 
                                                  <a  onclick="requestReturn(<?php echo $orderId?>,<?php echo $accession?>)" id="retunBtn" class="btn btn-dark-gray" style="width: 200px; border-radius: 9px">Request Return</a>

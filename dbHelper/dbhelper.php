@@ -749,7 +749,7 @@ class dbhelper extends connect
     public function __issuedBookDeatails($userid)
     {
         try {
-            $sql =  "SELECT * FROM  sulibrary.orders inner join sulibrary.users on orders.user_id=users.user_id inner join sulibrary.books on books.book_id=orders.book_id where status=1 and users.user_id='$userid';";
+            $sql =  "SELECT * FROM  sulibrary.orders inner join sulibrary.users on orders.user_id=users.user_id inner join sulibrary.books on books.book_id=orders.book_id where orders.status=1 and users.user_id='$userid';";
             $stmt = $this->__connect()->query($sql);
             if($stmt->rowCount()){
                 $rows=$stmt->fetchAll();
@@ -765,7 +765,7 @@ class dbhelper extends connect
     public function __issuedBooksCount($userid)
     {
         try {
-            $sql =  "SELECT * FROM  sulibrary.orders inner join sulibrary.users on orders.user_id=users.user_id inner join sulibrary.books on books.book_id=orders.book_id where status=1 and users.user_id='$userid';";
+            $sql =  "SELECT * FROM  sulibrary.orders inner join sulibrary.users on orders.user_id=users.user_id inner join sulibrary.books on books.book_id=orders.book_id where orders.status=1 and users.user_id='$userid';";
             $stmt = $this->__connect()->query($sql);
             return $stmt->rowCount();
 
@@ -778,7 +778,7 @@ class dbhelper extends connect
     public function __reservedBoksCount($userid)
     {
         try {
-            $sql =  "SELECT * FROM  sulibrary.orders inner join sulibrary.users on orders.user_id=users.user_id inner join sulibrary.books on books.book_id=orders.book_id where status=5 and users.user_id='$userid';";
+            $sql =  "SELECT * FROM  sulibrary.orders inner join sulibrary.users on orders.user_id=users.user_id inner join sulibrary.books on books.book_id=orders.book_id where orders.status=5 and users.user_id='$userid';";
             $stmt = $this->__connect()->query($sql);
             return $stmt->rowCount();
 
