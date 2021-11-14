@@ -1,6 +1,8 @@
 <?php
 include_once 'dbhelper.php';
-session_start();
+if (session_status() !== PHP_SESSION_ACTIVE || session_id() === ""){
+    session_start();
+}
 if (isset($_REQUEST['books'])) {
     $books = $_REQUEST['books'];
     $userid = $_POST['user_id'];

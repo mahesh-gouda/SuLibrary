@@ -1,4 +1,4 @@
-<?php include_once 'header.php'?>
+<?php include_once 'header.php' ?>
     <script
             src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -170,7 +170,11 @@
 
                                 <div class="bottom-wrap wow fadeInUp animated" data-wow-delay=".5s"
                                  style="margin-left: 4px; ">
-                                <a  onclick="addEBooktoCollections(<?php echo $bookId ?>,<?php echo $_SESSION['user_id'] ?>)"  class="btn btn-sm btn-primary float-right"
+                                <a  onclick="addEBooktoCollections(<?php echo $bookId ?>,<?php
+                                if(isset($_SESSION['user_id'])){
+                                echo $_SESSION['user_id']; }else{
+                                    header("Location: signin.php");
+                                }?>)"  class="btn btn-sm btn-primary float-right"
                                    style="margin-bottom: 10px; margin-right: 6px; color: whitesmoke ">Read Now</a>
                                 <div class="price-wrap h5">
 
@@ -216,7 +220,14 @@
                     success: function (response) {
                         $('#overlay').hide();
                         var result = $.trim(response);
-                        if (result === "0") {
+                        if (result === "3") {
+                            swal({
+                                title: "Failed",
+                                text: "Your Authorization is pending!",
+                                type: "warning",
+
+                            });
+                        }else if (result === "0") {
                             swal({
                                 title: "Failed",
                                 text: "Failed to Open E book",
@@ -232,10 +243,19 @@
                             }, function () {
                                 location.reload();
                             });
-                        }else if (result === "2") {
+                        } else if (result === "2") {
                             swal({
                                 title: "Already Exists",
                                 text: "E-Book Already exists in your Profile",
+                                type: "info",
+
+                            }, function () {
+                                location.reload();
+                            });
+                        } else {
+                            swal({
+                                title: "error",
+                                text: "we are sorry!! some error occurred while processing",
                                 type: "info",
 
                             }, function () {

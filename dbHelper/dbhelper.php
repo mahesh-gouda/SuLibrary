@@ -1,4 +1,8 @@
 <?php
+if (session_status() !== PHP_SESSION_ACTIVE || session_id() === ""){
+    session_start();
+}
+
 include_once __DIR__.'/connect.php';
 class dbhelper extends connect
 {
@@ -63,7 +67,7 @@ class dbhelper extends connect
 
     public function __fetchUser($username, $password)
     {
-        $sql = "SELECT * FROM sulibrary.users where email='$username' and password ='$password' ";
+        $sql = "SELECT * FROM sulibrary.users where users.email='$username' and users.password ='$password' ";
         $stmt = $this->__connect()->query($sql);
         return $stmt;
 
@@ -341,6 +345,8 @@ class dbhelper extends connect
                 $rows = $stmt->fetchAll();
                 foreach ($rows as $row)
                     return $row['card_number'];
+            }else {
+                return 0;
             }
             return 0;
         } catch (ErrorException $e) {

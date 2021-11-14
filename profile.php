@@ -348,7 +348,17 @@ include_once 'dbHelper/dbhelper.php';
                                             <h3 class="card-title">E Materials</h3>
                                         </div>
                                         <div class="card-body">
-                                            <h5 class="number mb-0 font-32 counter">0</h5>
+                                            <?php
+                                            $userEBooks=(new dbhelper)->__getUserEBooks($userId);
+                                            $i=0;
+                                            if($userEBooks != 0){
+
+                                            foreach ($userEBooks as $row) {
+                                                $i++;
+                                            }
+                                            }
+                                            ?>
+                                            <h5 class="number mb-0 font-32 counter"><?php echo $i?></h5>
 <!--                                            <span class="font-12">Measure How Fast... <a href="#">More</a></span>-->
                                         </div>
                                     </div>
